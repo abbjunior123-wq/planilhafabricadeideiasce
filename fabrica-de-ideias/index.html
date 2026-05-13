@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Comercial — Fábrica de Ideias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --yellow:#F5C400;--yellow-dark:#D4A900;
+  --black:#000;--bg:#0a0a0a;--card:#111;--card2:#1a1a1a;
+  --border:rgba(255,255,255,0.08);--text:#fff;
+  --muted:rgba(255,255,255,0.45);--green:#2ecc71;--red:#e74c3c;
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+img{max-width:100%;display:block}
+button,input,select{font-family:'Syne',sans-serif}
+
+/* ── LOGIN ───────────────────────────────────────────── */
+#loginScreen{
+  position:fixed;inset:0;z-index:9999;
+  background:#000;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#loginScreen::after{
+  content:'';position:absolute;inset:0;
+  background-image:url('./FUNDO NOVO.png');
+  background-size:cover;background-position:center;
+  opacity:.12;pointer-events:none;
+}
+#loginScreen::before{
+  content:'';position:absolute;
+  top:-100px;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(245,196,0,.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+.login-box{
+  position:relative;z-index:1;
+  background:var(--card);
+  border:1px solid rgba(245,196,0,.2);
+  border-radius:16px;padding:44px 36px;
+  width:360px;max-width:calc(100vw - 32px);
+  text-align:center;
+}
+.login-logo{
+  width:72px;height:72px;border-radius:10px;
+  margin:0 auto 20px;object-fit:contain;
+}
+.login-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:30px;letter-spacing:.06em;margin-bottom:4px;
+}
+.login-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:30px}
+.login-box input[type=password]{
+  width:100%;padding:14px 16px;margin-bottom:12px;
+  background:#0a0a0a;border:1px solid var(--border);
+  border-radius:8px;color:#fff;font-size:15px;outline:none;transition:.2s;
+}
+.login-box input[type=password]::placeholder{color:var(--muted)}
+.login-box input[type=password]:focus{border-color:var(--yellow)}
+.btn-yellow{
+  width:100%;padding:14px;background:var(--yellow);color:#000;
+  font-size:14px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+  border:none;border-radius:100px;cursor:pointer;transition:.2s;
+  box-shadow:0 6px 24px rgba(245,196,0,.25);
+}
+.btn-yellow:hover{background:var(--yellow-dark);transform:translateY(-2px);box-shadow:0 10px 30px rgba(245,196,0,.35)}
+.btn-yellow:active{transform:translateY(0)}
+.login-error{font-size:13px;color:var(--red);margin-top:12px;min-height:18px}
+
+/* ── APP ─────────────────────────────────────────────── */
+#app{display:none}
+
+/* ── HEADER ──────────────────────────────────────────── */
+header{
+  background:#000;
+  padding:0 20px;height:62px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(245,196,0,.12);
+}
+header::after{
+  content:'';position:absolute;inset:0;
+  background-image:url('./FUNDO NOVO.png');
+  background-size:115%;background-position:top left;
+  opacity:.12;pointer-events:none;
+}
+header::before{
+  content:'';position:absolute;
+  top:-80px;right:-80px;width:400px;height:400px;
+  background:radial-gradient(circle,rgba(245,196,0,.06) 0%,transparent 65%);
+  pointer-events:none;
+}
+.header-inner{position:relative;z-index:1;display:flex;align-items:center;gap:12px}
+.header-logo{height:36px;width:auto;border-radius:4px}
+.header-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.04em;line-height:1.1}
+.header-sub{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:1px}
+.header-right{position:relative;z-index:1;display:flex;align-items:center;gap:8px}
+.badge-user{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  padding:5px 12px;border-radius:20px;
+  background:rgba(245,196,0,.1);color:var(--yellow);border:1px solid rgba(245,196,0,.2);
+}
+.btn-sair{
+  background:none;border:1px solid var(--border);color:var(--muted);
+  padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;
+  cursor:pointer;transition:.2s;
+}
+.btn-sair:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+
+/* ── TABS ────────────────────────────────────────────── */
+.tabs{
+  display:flex;overflow-x:auto;
+  background:#000;border-bottom:1px solid var(--border);
+  scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  padding:14px 18px;cursor:pointer;white-space:nowrap;
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--muted);border-bottom:2px solid transparent;
+  margin-bottom:-1px;transition:.15s;
+}
+.tab:hover{color:rgba(255,255,255,.75)}
+.tab.active{color:var(--yellow);border-bottom-color:var(--yellow)}
+
+/* ── CONTENT ─────────────────────────────────────────── */
+.content{padding:16px;max-width:720px;margin:0 auto}
+
+/* ── CARD ────────────────────────────────────────────── */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:18px;margin-bottom:14px;
+}
+.card-title{
+  font-size:10px;font-weight:700;text-transform:uppercase;
+  color:var(--yellow);letter-spacing:.08em;margin-bottom:14px;
+}
+
+/* ── SEARCH ──────────────────────────────────────────── */
+.search-box{position:relative}
+.search-box input{
+  width:100%;padding:13px 14px 13px 44px;
+  background:#0a0a0a;border:1px solid var(--border);
+  border-radius:8px;color:#fff;font-size:15px;outline:none;transition:.2s;
+}
+.search-box input::placeholder{color:var(--muted)}
+.search-box input:focus{border-color:var(--yellow)}
+.search-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--muted);pointer-events:none;
+}
+.dropdown{
+  position:absolute;top:calc(100% + 4px);left:0;right:0;
+  background:var(--card2);border:1px solid rgba(245,196,0,.2);
+  border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.6);
+  z-index:100;max-height:280px;overflow-y:auto;
+}
+.dropdown-item{
+  padding:11px 14px;cursor:pointer;font-size:13px;
+  border-bottom:1px solid var(--border);line-height:1.4;transition:.1s;
+}
+.dropdown-item:last-child{border-bottom:none}
+.dropdown-item:hover,.dropdown-item.focused{background:rgba(245,196,0,.07)}
+.dropdown-item .cat{font-size:10px;color:var(--yellow);font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.no-results{padding:16px;text-align:center;color:var(--muted);font-size:13px}
+
+/* ── PRODUTO SELECIONADO ─────────────────────────────── */
+.produto-selecionado{
+  background:rgba(245,196,0,.06);
+  border:1px solid rgba(245,196,0,.2);
+  border-radius:8px;padding:13px 14px;
+  margin-top:10px;display:flex;
+  justify-content:space-between;align-items:center;
+}
+.produto-selecionado .nome{font-size:14px;font-weight:700;color:var(--yellow)}
+.produto-selecionado .sub{font-size:11px;color:var(--muted);margin-top:2px}
+.btn-limpar{
+  background:none;border:none;color:var(--muted);
+  cursor:pointer;font-size:22px;line-height:1;
+  padding:2px 8px;transition:.15s;
+}
+.btn-limpar:hover{color:#fff}
+
+/* ── SLIDER ──────────────────────────────────────────── */
+.slider-section{margin-top:4px}
+.qty-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.qty-pill{
+  padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;
+  border:1px solid var(--border);color:var(--muted);
+  cursor:pointer;transition:.15s;background:transparent;
+}
+.qty-pill:hover{border-color:rgba(245,196,0,.4);color:rgba(255,255,255,.8)}
+.qty-pill.active{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.slider-row{display:flex;align-items:center;gap:10px}
+.arr-btn{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:var(--card2);border:1px solid var(--border);
+  color:#fff;font-size:20px;line-height:1;
+  cursor:pointer;transition:.15s;
+  display:flex;align-items:center;justify-content:center;
+}
+.arr-btn:hover:not(:disabled){background:rgba(245,196,0,.15);border-color:rgba(245,196,0,.4)}
+.arr-btn:disabled{opacity:.25;cursor:default}
+input[type=range]{
+  flex:1;-webkit-appearance:none;height:6px;
+  border-radius:3px;outline:none;cursor:pointer;
+  background:rgba(255,255,255,.1);
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:28px;height:28px;
+  border-radius:50%;background:var(--yellow);cursor:pointer;
+  box-shadow:0 2px 10px rgba(245,196,0,.45);transition:.1s;
+}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
+input[type=range]::-moz-range-thumb{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--yellow);cursor:pointer;border:none;
+}
+
+/* ── PRICE DISPLAY ───────────────────────────────────── */
+.price-display{text-align:center;padding:24px 10px 10px}
+.qtde-badge{
+  display:inline-block;background:rgba(255,255,255,.07);
+  color:#fff;border-radius:20px;padding:5px 18px;
+  font-size:13px;font-weight:600;margin-bottom:14px;letter-spacing:.04em;
+}
+.price-main{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:52px;color:var(--yellow);line-height:1;letter-spacing:.02em;
+}
+.price-label{font-size:11px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+.price-pix{font-size:22px;color:var(--green);font-weight:700;margin-top:10px}
+.price-pix small{font-size:13px;font-weight:400;color:rgba(46,204,113,.6)}
+.price-unit{font-size:13px;color:var(--muted);margin-top:6px}
+.desconto-badge{
+  display:inline-block;
+  background:rgba(46,204,113,.1);color:var(--green);
+  border:1px solid rgba(46,204,113,.2);
+  border-radius:6px;padding:5px 12px;
+  font-size:13px;font-weight:700;margin-top:10px;
+}
+
+/* ── TABLE ───────────────────────────────────────────── */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{
+  background:rgba(245,196,0,.07);
+  color:var(--yellow);padding:10px 12px;
+  text-align:left;font-size:10px;
+  text-transform:uppercase;letter-spacing:.07em;white-space:nowrap;
+}
+th:not(:first-child){text-align:right}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:rgba(255,255,255,.8)}
+td:not(:first-child){text-align:right}
+tr:last-child td{border-bottom:none}
+tr.highlight td{background:rgba(245,196,0,.06);color:#fff;font-weight:700}
+tr.highlight td:first-child{border-left:2px solid var(--yellow)}
+.pix{color:var(--green)}
+.desc-pos{color:var(--green);font-weight:700}
+.desc-neg{color:var(--muted)}
+
+/* ── EMPTY STATE ─────────────────────────────────────── */
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}
+.empty-icon{margin-bottom:14px;opacity:.25}
+.empty-state p{font-size:15px}
+
+/* ── FILTERS ─────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+select{
+  padding:9px 12px;border:1px solid var(--border);
+  border-radius:6px;font-size:13px;
+  background:var(--card2);color:#fff;flex:1;min-width:140px;
+  outline:none;cursor:pointer;transition:.2s;
+}
+select:focus{border-color:var(--yellow)}
+.note{font-size:11px;color:var(--muted);margin-top:10px}
+
+/* ── FAIXAS ──────────────────────────────────────────── */
+.calc-box label{
+  display:block;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);margin-bottom:8px;margin-top:18px;
+}
+.calc-box label:first-child{margin-top:0}
+.calc-box input[type=number]{
+  width:100%;padding:13px 14px;
+  background:#0a0a0a;border:1px solid var(--border);
+  border-radius:8px;color:#fff;font-size:22px;outline:none;transition:.2s;
+}
+.calc-box input[type=number]:focus{border-color:var(--yellow)}
+.faixa-result{
+  background:rgba(46,204,113,.05);
+  border:1px solid rgba(46,204,113,.2);
+  border-radius:8px;padding:22px;text-align:center;margin-top:18px;
+}
+.faixa-result .rmult{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.faixa-result .rpix{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--green);line-height:1}
+.faixa-result .rpix small{font-size:16px;color:rgba(46,204,113,.6)}
+.faixa-result .rcartao{font-size:16px;color:rgba(255,255,255,.65);margin-top:6px}
+.faixa-result .rdet{font-size:11px;color:var(--muted);margin-top:8px}
+
+/* ── AVULSOS ─────────────────────────────────────────── */
+.avulso{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:16px 18px;margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.avulso .av-nome{font-size:15px;font-weight:700}
+.avulso .av-cartao{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:26px;color:var(--yellow);line-height:1;text-align:right;
+}
+.avulso .av-pix{font-size:13px;color:var(--green);margin-top:2px;text-align:right}
+
+/* ── ADMIN ───────────────────────────────────────────── */
+.drop-zone{
+  border:2px dashed rgba(245,196,0,.25);
+  border-radius:10px;padding:40px 20px;text-align:center;
+  cursor:pointer;transition:.2s;
+}
+.drop-zone:hover,.drop-zone.drag-over{
+  border-color:var(--yellow);background:rgba(245,196,0,.04);
+}
+.drop-zone p{color:var(--muted);font-size:13px;margin-top:8px}
+.drop-zone strong{color:#fff;font-size:15px}
+.upload-svg{color:rgba(245,196,0,.45);margin:0 auto 10px}
+#fileInput{display:none}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 20px;
+  border:1px solid rgba(245,196,0,.3);color:var(--yellow);
+  border-radius:6px;font-size:13px;font-weight:700;
+  cursor:pointer;transition:.2s;background:none;
+}
+.btn-outline:hover{background:rgba(245,196,0,.08);border-color:var(--yellow)}
+.import-preview{
+  margin-top:12px;background:#0a0a0a;border-radius:8px;
+  padding:14px;border:1px solid var(--border);
+  max-height:180px;overflow-y:auto;
+  font-size:12px;color:var(--muted);font-family:monospace;
+  white-space:pre;
+}
+.status-ok{color:var(--green);font-weight:700;font-size:13px;margin-top:10px;display:block}
+.status-err{color:var(--red);font-size:13px;margin-top:10px;display:block}
+.admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.senha-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.senha-row:last-child{margin-bottom:0}
+.senha-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;width:80px;flex-shrink:0}
+.senha-input{
+  flex:1;padding:9px 12px;background:#0a0a0a;
+  border:1px solid var(--border);border-radius:6px;
+  color:#fff;font-family:monospace;font-size:14px;outline:none;transition:.2s;
+}
+.senha-input:focus{border-color:var(--yellow)}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ──────────────────────────────────────────── -->
+<div id="loginScreen">
+  <div class="login-box">
+    <img src="./logo 02 grande quadrada.png" alt="Logo" class="login-logo">
+    <div class="login-title">Acesso Restrito</div>
+    <div class="login-sub">Calculadora Comercial</div>
+    <input type="password" id="passInput" placeholder="Senha de acesso"
+           onkeydown="if(event.key==='Enter')fazerLogin()">
+    <button class="btn-yellow" onclick="fazerLogin()">Entrar</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ── APP ────────────────────────────────────────────── -->
+<div id="app">
+
+  <header>
+    <div class="header-inner">
+      <img src="./logo 02 grande quadrada.png" alt="Logo" class="header-logo">
+      <div>
+        <div class="header-title">Calculadora Comercial</div>
+        <div class="header-sub">Fabrica de Ideias · Uso Interno</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="badge-user" id="badgeUser"></span>
+      <button class="btn-sair" onclick="sair()">Sair</button>
+    </div>
+  </header>
+
+  <div class="tabs" id="tabBar">
+    <div class="tab active" onclick="tab('calc',this)">Calculadora</div>
+    <div class="tab" onclick="tab('panfleto',this)">Panfleto / Folder</div>
+    <div class="tab" onclick="tab('pastas',this)">Pastas</div>
+    <div class="tab" onclick="tab('faixas',this)">Faixas</div>
+    <div class="tab" onclick="tab('avulsos',this)">Avulsos</div>
+    <div class="tab hidden" id="tabAdmin" onclick="tab('admin',this)">Admin</div>
+  </div>
+
+  <div class="content">
+
+    <!-- CALCULADORA -->
+    <div id="tab-calc">
+      <div class="card">
+        <div class="card-title">Buscar produto</div>
+        <div class="search-box" id="searchBox">
+          <span class="search-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </span>
+          <input type="text" id="searchInput"
+                 placeholder="Ex: couche fosca, supremo, holografica..."
+                 autocomplete="off"
+                 oninput="onSearch(this.value)"
+                 onfocus="onSearch(this.value)"
+                 onkeydown="onKey(event)">
+          <div class="dropdown hidden" id="dropdown"></div>
+        </div>
+        <div id="produtoSelecionado" class="hidden"></div>
+      </div>
+
+      <div id="calcBody" class="hidden">
+        <div class="card">
+          <div class="card-title">Quantidade</div>
+          <div class="slider-section">
+            <div class="qty-pills" id="qtyPills"></div>
+            <div class="slider-row">
+              <button class="arr-btn" id="arrLeft" onclick="moverSlider(-1)">&#8249;</button>
+              <input type="range" id="slider" min="0" value="0" step="1"
+                     oninput="onSlider(this.value)">
+              <button class="arr-btn" id="arrRight" onclick="moverSlider(1)">&#8250;</button>
+            </div>
+          </div>
+          <div class="price-display">
+            <div class="qtde-badge" id="qtdeBadge"></div>
+            <div class="price-main" id="priceCartao"></div>
+            <div class="price-label">no cartao</div>
+            <div class="price-pix" id="pricePix"></div>
+            <div class="price-unit" id="priceUnit"></div>
+            <div id="descontoBadge"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Comparativo de quantidades</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Qtde</th><th>Cartao</th><th>PIX</th>
+                  <th>Unit. Cartao</th><th>Desconto</th>
+                </tr>
+              </thead>
+              <tbody id="compBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="emptyState" class="card empty-state">
+        <div class="empty-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+        <p>Busque um produto acima para ver os precos</p>
+      </div>
+    </div>
+
+    <!-- PANFLETO / FOLDER -->
+    <div id="tab-panfleto" class="hidden">
+      <div class="card">
+        <div class="filters">
+          <select id="fProd" onchange="filtrarPixel()">
+            <option value="">Todos os produtos</option>
+            <option>Ventarola (Abanador)</option>
+            <option>Solapas (Cartela)</option>
+            <option>Panfleto 4x0</option>
+            <option>Panfleto 4x4</option>
+            <option>Folder A4</option>
+            <option>Folder A3</option>
+            <option>Capa de Carne</option>
+            <option>Envelope</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Produto</th><th>Tamanho</th><th>Papel</th>
+                <th>Qtde</th><th>Cartao</th><th>PIX</th><th>Prazo</th>
+              </tr>
+            </thead>
+            <tbody id="bPixel"></tbody>
+          </table>
+        </div>
+        <p class="note">Fornecedor: PIXEL</p>
+      </div>
+    </div>
+
+    <!-- PASTAS -->
+    <div id="tab-pastas" class="hidden">
+      <div class="card">
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px">
+          31,5x45cm · Supremo 250g · 4x0 · Prazo: 7-10 dias uteis<br>
+          Impressao 4x4: + R$500/milheiro
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Acabamento</th><th>300 un</th>
+                <th>500 un</th><th>1.000 un</th><th>2.000 un</th>
+              </tr>
+            </thead>
+            <tbody id="bPastas"></tbody>
+          </table>
+        </div>
+        <p class="note">Fornecedor: PIXEL</p>
+      </div>
+    </div>
+
+    <!-- FAIXAS -->
+    <div id="tab-faixas" class="hidden">
+      <div class="card">
+        <div class="calc-box">
+          <label>Valor cobrado pelo fornecedor (R$)</label>
+          <input type="number" id="custoTotal" placeholder="Ex: 500.00"
+                 step="0.01" oninput="calcFaixa()">
+          <label>Quantidade em m²</label>
+          <input type="number" id="qtdm2" placeholder="Ex: 30"
+                 oninput="calcFaixa()">
+        </div>
+        <div class="faixa-result hidden" id="faixaResult">
+          <div class="rmult" id="rMult"></div>
+          <div class="rpix" id="rPix"></div>
+          <div class="rcartao" id="rCartao"></div>
+          <div class="rdet" id="rDet"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Tabela de multiplicadores</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Quantidade (m²)</th><th>Multiplicador</th></tr></thead>
+            <tbody>
+              <tr><td>Ate 49 m²</td><td style="text-align:right">x 2,5</td></tr>
+              <tr><td>50 – 74 m²</td><td style="text-align:right">x 2,0</td></tr>
+              <tr><td>75 – 99 m²</td><td style="text-align:right">x 1,8</td></tr>
+              <tr><td>100 – 299 m²</td><td style="text-align:right">x 1,7</td></tr>
+              <tr><td>300 – 499 m²</td><td style="text-align:right">x 1,65</td></tr>
+              <tr><td>500 – 999 m²</td><td style="text-align:right">x 1,6</td></tr>
+              <tr><td>1.000 – 1.999 m²</td><td style="text-align:right">x 1,55</td></tr>
+              <tr><td>2.000 m² ou mais</td><td style="text-align:right">x 1,5</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AVULSOS -->
+    <div id="tab-avulsos" class="hidden">
+      <div id="bAvulsos"></div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="tab-admin" class="hidden">
+
+      <div class="card">
+        <div class="card-title">Importar tabela de precos (CSV)</div>
+        <div class="drop-zone" id="dropZone"
+             onclick="document.getElementById('fileInput').click()"
+             ondragover="event.preventDefault();this.classList.add('drag-over')"
+             ondragleave="this.classList.remove('drag-over')"
+             ondrop="onDrop(event)">
+          <div class="upload-svg">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <strong>Clique para selecionar ou arraste o CSV aqui</strong>
+          <p>Formato: Nome, Impressao, Categoria, Qtde, Cartao, PIX</p>
+          <input type="file" id="fileInput" accept=".csv,.txt"
+                 onchange="lerArquivo(this.files[0])">
+        </div>
+        <div id="importStatus"></div>
+        <div id="importPreview"></div>
+        <div id="importActions" class="hidden admin-actions">
+          <button class="btn-yellow" style="flex:1;padding:12px;border-radius:8px"
+                  onclick="aplicarImport()">Aplicar e salvar</button>
+          <button class="btn-outline" onclick="cancelarImport()">Cancelar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Banco de dados atual</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-outline" onclick="exportarCSV()">Exportar como CSV</button>
+          <button class="btn-outline" onclick="resetarDados()" style="color:var(--red);border-color:rgba(231,76,60,.3)">Restaurar dados originais</button>
+        </div>
+        <p class="note" id="dbInfo" style="margin-top:12px"></p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Senhas de acesso</div>
+        <p class="note" style="margin-bottom:14px">As senhas ficam salvas neste dispositivo. Cada computador precisa ser configurado separadamente.</p>
+        <div class="senha-row">
+          <span class="senha-label">Comercial</span>
+          <input type="text" class="senha-input" id="novaSenhaComercial" placeholder="Nova senha...">
+        </div>
+        <div class="senha-row">
+          <span class="senha-label">Admin</span>
+          <input type="text" class="senha-input" id="novaSenhaAdmin" placeholder="Nova senha...">
+        </div>
+        <button class="btn-yellow" style="margin-top:14px;padding:11px 28px;width:auto;border-radius:8px"
+                onclick="salvarSenhas()">Salvar senhas</button>
+        <div id="senhaStatus" style="margin-top:8px;font-size:12px"></div>
+      </div>
+
+    </div>
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<script>
+// ── SENHAS PADRAO ─────────────────────────────────────────────
+// Altere aqui ou via painel Admin (as senhas do painel sobrepõem estas)
+const SENHA_COMERCIAL_DEFAULT = 'comercial123';
+const SENHA_ADMIN_DEFAULT     = 'admin2025';
+
+// ── DADOS ─────────────────────────────────────────────────────
+const PRODUTOS_DEFAULT = [
+  // COUCHE FOSCA
+  {nome:"Couche Lam. Fosca Frente 250g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:50,c:58.75,p:55.81},{q:100,c:83.75,p:79.56},{q:250,c:119.00,p:113.05},{q:500,c:177.30,p:168.44},{q:1000,c:309.38,p:293.91}]},
+  {nome:"Couche Lam. Fosca Frente e Verso 250g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:50,c:73.75,p:70.06},{q:100,c:103.75,p:98.56},{q:250,c:125.00,p:118.75}]},
+  {nome:"Couche Lam. Fosca Frente 300g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:50,c:63.75,p:60.56},{q:100,c:99.98,p:94.98},{q:250,c:137.00,p:130.15}]},
+  {nome:"Couche Lam. Fosca Frente e Verso 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:50,c:83.75,p:79.56}]},
+  // COUCHE HOLOGRAFICA
+  {nome:"Couche Lam. Holografica Frente 250g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:50,c:66.25,p:62.94},{q:100,c:101.25,p:96.19},{q:250,c:135.90,p:129.11},{q:500,c:220.15,p:209.14},{q:1000,c:419.88,p:398.89}]},
+  {nome:"Couche Lam. Holografica Frente e Verso 250g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:50,c:91.25,p:86.69},{q:100,c:115.00,p:109.25},{q:250,c:171.90,p:163.31},{q:500,c:293.25,p:278.59},{q:1000,c:498.28,p:473.37}]},
+  {nome:"Couche Lam. Holografica Frente 300g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:50,c:83.75,p:79.56},{q:100,c:122.48,p:116.35},{q:250,c:153.90,p:146.21},{q:500,c:249.88,p:237.39},{q:1000,c:474.28,p:450.57}]},
+  {nome:"Couche Lam. Holografica Frente e Verso 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:50,c:101.25,p:96.19},{q:100,c:131.98,p:125.38},{q:250,c:179.10,p:170.15},{q:500,c:282.18,p:268.07},{q:1000,c:484.48,p:460.26}]},
+  // COUCHE BRILHO
+  {nome:"Couche Brilho 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:500,c:321.28,p:305.22},{q:1000,c:452.18,p:429.57},{q:3000,c:1244.78,p:1182.54},{q:5000,c:1952.98,p:1855.34},{q:10000,c:3685.49,p:3501.21},{q:20000,c:6539.99,p:6212.99}]},
+  {nome:"Couche Brilho Lam. Brilho Frente Digital 300g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:50,c:71.25,p:67.69},{q:100,c:99.98,p:94.98},{q:250,c:131.00,p:124.45}]},
+  {nome:"Couche Brilho Lam. Brilho Frente e Verso Digital 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:50,c:83.75,p:79.56},{q:100,c:122.48,p:116.35},{q:250,c:159.30,p:151.34}]},
+  // HOTSTAMPING
+  {nome:"Couche Fosco e Hotstamping 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:50,c:116.25,p:110.44},{q:100,c:137.98,p:131.08},{q:250,c:211.65,p:201.07}]},
+  {nome:"Lam. Fosca + Hotstamping + Verniz Localizado 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:500,c:411.38,p:390.81},{q:1000,c:501.48,p:476.41},{q:3000,c:1299.18,p:1234.22},{q:5000,c:1932.83,p:1836.19},{q:10000,c:3643.49,p:3461.31},{q:20000,c:6592.49,p:6262.86}]},
+  // ESPECIAIS
+  {nome:"Gold Master 300g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:48,c:71.25,p:67.69},{q:96,c:109.98,p:104.48},{q:240,c:206.55,p:196.22},{q:480,c:402.88,p:382.74}]},
+  {nome:"Gold Master 300g",impressao:"4X1",cat:"Cartao de Visita",precos:[{q:48,c:73.75,p:70.06},{q:96,c:105.98,p:100.68},{q:240,c:211.65,p:201.07},{q:480,c:414.78,p:394.04}]},
+  {nome:"Gold Master 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:48,c:76.25,p:72.44},{q:96,c:119.98,p:113.98},{q:240,c:226.95,p:215.60},{q:480,c:445.38,p:423.11}]},
+  {nome:"Metalizado 250g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:50,c:51.25,p:48.69},{q:100,c:81.25,p:77.19},{q:250,c:121.00,p:114.95}]},
+  {nome:"Metalizado 250g",impressao:"4X1",cat:"Cartao de Visita",precos:[{q:50,c:53.75,p:51.06},{q:100,c:83.75,p:79.56},{q:250,c:127.00,p:120.65}]},
+  {nome:"Metalizado 250g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:50,c:63.75,p:60.56},{q:100,c:93.75,p:89.06},{q:250,c:137.70,p:130.82}]},
+  {nome:"Pero Plus 300g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:48,c:71.25,p:67.69},{q:96,c:103.98,p:98.78},{q:240,c:208.25,p:197.84},{q:480,c:407.98,p:387.58}]},
+  {nome:"Pero Plus 300g",impressao:"4X1",cat:"Cartao de Visita",precos:[{q:48,c:73.75,p:70.06},{q:96,c:107.98,p:102.58},{q:240,c:213.35,p:202.68},{q:480,c:418.18,p:397.27}]},
+  {nome:"Pero Plus 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:48,c:78.75,p:74.81},{q:96,c:113.98,p:108.28},{q:240,c:228.65,p:217.22},{q:480,c:450.48,p:427.96}]},
+  {nome:"Silver Lux 300g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:48,c:76.25,p:72.44},{q:96,c:103.98,p:98.78},{q:240,c:206.55,p:196.22},{q:480,c:404.58,p:384.35}]},
+  {nome:"Silver Lux 300g",impressao:"4X1",cat:"Cartao de Visita",precos:[{q:48,c:73.75,p:70.06},{q:96,c:105.98,p:100.68},{q:240,c:211.65,p:201.07},{q:480,c:414.78,p:394.04}]},
+  {nome:"Silver Lux 300g",impressao:"4X4",cat:"Cartao de Visita",precos:[{q:48,c:83.75,p:79.56},{q:96,c:113.98,p:108.28},{q:240,c:228.65,p:217.22},{q:480,c:447.08,p:424.73}]},
+  // SUPREMO
+  {nome:"Supremo 255g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:500,c:77.48,p:73.60},{q:1000,c:101.00,p:95.95},{q:3000,c:226.95,p:215.60},{q:5000,c:359.55,p:341.57},{q:10000,c:668.23,p:634.82},{q:20000,c:1238.38,p:1176.46}]},
+  {nome:"Supremo 255g",impressao:"4X1",cat:"Cartao de Visita",precos:[{q:500,c:79.98,p:75.98},{q:1000,c:105.00,p:99.75},{q:3000,c:240.55,p:228.52},{q:5000,c:383.35,p:364.18},{q:10000,c:714.43,p:678.71},{q:20000,c:1323.18,p:1257.02}]},
+  {nome:"Supremo 305g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:500,c:78.75,p:74.81},{q:1000,c:115.00,p:109.25},{q:3000,c:260.95,p:247.90},{q:5000,c:417.35,p:396.48},{q:10000,c:780.43,p:741.41},{q:20000,c:1455.98,p:1383.18}]},
+  {nome:"Supremo 305g",impressao:"4X1",cat:"Cartao de Visita",precos:[{q:500,c:86.25,p:81.94},{q:1000,c:119.00,p:113.05},{q:3000,c:269.45,p:255.98},{q:5000,c:430.95,p:409.40},{q:10000,c:806.83,p:766.49},{q:20000,c:1505.58,p:1430.30}]},
+  {nome:"Supremo Digital 305g",impressao:"4X0",cat:"Cartao de Visita",precos:[{q:100,c:49.98,p:47.48},{q:250,c:79.98,p:75.98},{q:500,c:105.00,p:99.75},{q:1000,c:168.30,p:159.89}]},
+  {nome:"Supremo Digital 305g",impressao:"4X1",cat:"Cartao de Visita",precos:[{q:100,c:52.48,p:49.85},{q:250,c:87.48,p:83.10},{q:500,c:115.00,p:109.25},{q:1000,c:178.18,p:169.27}]},
+];
+
+const PIXEL=[
+  ["Ventarola (Abanador)","22x19cm 4x0","Triplex 250g","500","R$ 1.104,00","R$ 1.048,80","7-10 dias"],
+  ["Ventarola (Abanador)","22x19cm 4x0","Triplex 250g","1.000","R$ 1.424,00","R$ 1.352,80","7-10 dias"],
+  ["Ventarola (Abanador)","22x19cm 4x0","Triplex 250g","2.000","R$ 1.937,50","R$ 1.840,63","7-10 dias"],
+  ["Ventarola (Abanador)","22x19cm 4x4","Triplex 250g","500","R$ 1.424,00","R$ 1.352,80","7-10 dias"],
+  ["Ventarola (Abanador)","22x19cm 4x4","Triplex 250g","1.000","R$ 1.844,50","R$ 1.752,28","7-10 dias"],
+  ["Ventarola (Abanador)","22x19cm 4x4","Triplex 250g","2.000","R$ 2.309,50","R$ 2.194,03","7-10 dias"],
+  ["Solapas (Cartela)","10x5cm fechado","Duplex 250g","2.000","R$ 912,00","R$ 866,40","5-7 dias"],
+  ["Solapas (Cartela)","10x5cm fechado","Duplex 250g","3.000","R$ 1.152,00","R$ 1.094,40","5-7 dias"],
+  ["Solapas (Cartela)","10x5cm fechado","Duplex 250g","5.000","R$ 1.328,00","R$ 1.261,60","5-7 dias"],
+  ["Panfleto 4x0","10x14cm","Couche 90g","1.000","R$ 153,00","R$ 145,35","3-4 dias"],
+  ["Panfleto 4x0","10x14cm","Couche 90g","2.500","R$ 178,50","R$ 169,58","4-5 dias"],
+  ["Panfleto 4x0","10x14cm","Couche 90g","5.000","R$ 297,50","R$ 282,63","2-3 dias"],
+  ["Panfleto 4x0","10x14cm","Couche 90g","10.000","R$ 577,50","R$ 548,63","2-3 dias"],
+  ["Panfleto 4x0","10x14cm","Couche 90g","20.000","R$ 1.088,00","R$ 1.033,60","—"],
+  ["Panfleto 4x0","14x20cm","Couche 90g","1.000","R$ 289,00","R$ 274,55","3-4 dias"],
+  ["Panfleto 4x0","14x20cm","Couche 90g","2.500","R$ 357,00","R$ 339,15","4-5 dias"],
+  ["Panfleto 4x0","14x20cm","Couche 90g","5.000","R$ 577,50","R$ 548,63","2-3 dias"],
+  ["Panfleto 4x0","14x20cm","Couche 90g","10.000","R$ 1.120,00","R$ 1.064,00","2-3 dias"],
+  ["Panfleto 4x0","14x20cm","Couche 90g","20.000","R$ 2.108,00","R$ 2.002,60","—"],
+  ["Panfleto 4x0","20x28cm","Couche 90g","1.000","R$ 561,00","R$ 532,95","3-4 dias"],
+  ["Panfleto 4x0","20x28cm","Couche 90g","2.500","R$ 693,00","R$ 658,35","4-5 dias"],
+  ["Panfleto 4x0","20x28cm","Couche 90g","5.000","R$ 1.120,00","R$ 1.064,00","2-3 dias"],
+  ["Panfleto 4x0","20x28cm","Couche 90g","10.000","R$ 2.170,00","R$ 2.061,50","2-3 dias"],
+  ["Panfleto 4x0","20x28cm","Couche 90g","20.000","R$ 4.080,00","R$ 3.876,00","—"],
+  ["Panfleto 4x4","10x14cm","Couche 90g","1.000","R$ 171,00","R$ 162,45","3-4 dias"],
+  ["Panfleto 4x4","10x14cm","Couche 90g","2.500","R$ 212,50","R$ 201,88","4-5 dias"],
+  ["Panfleto 4x4","10x14cm","Couche 90g","5.000","R$ 374,00","R$ 355,30","2-3 dias"],
+  ["Panfleto 4x4","10x14cm","Couche 90g","10.000","R$ 726,00","R$ 689,70","2-3 dias"],
+  ["Panfleto 4x4","10x14cm","Couche 90g","20.000","R$ 1.376,00","R$ 1.307,20","—"],
+  ["Panfleto 4x4","14x20cm","Couche 90g","1.000","R$ 323,00","R$ 306,85","3-4 dias"],
+  ["Panfleto 4x4","14x20cm","Couche 90g","2.500","R$ 425,00","R$ 403,75","4-5 dias"],
+  ["Panfleto 4x4","14x20cm","Couche 90g","5.000","R$ 726,00","R$ 689,70","2-3 dias"],
+  ["Panfleto 4x4","14x20cm","Couche 90g","10.000","R$ 1.408,00","R$ 1.337,60","2-3 dias"],
+  ["Panfleto 4x4","14x20cm","Couche 90g","20.000","R$ 2.666,00","R$ 2.532,70","—"],
+  ["Panfleto 4x4","20x28cm","Couche 90g","1.000","R$ 627,00","R$ 595,65","3-4 dias"],
+  ["Panfleto 4x4","20x28cm","Couche 90g","2.500","R$ 800,00","R$ 760,00","4-5 dias"],
+  ["Panfleto 4x4","20x28cm","Couche 90g","5.000","R$ 1.408,00","R$ 1.337,60","2-3 dias"],
+  ["Panfleto 4x4","20x28cm","Couche 90g","10.000","R$ 2.728,00","R$ 2.591,60","2-3 dias"],
+  ["Panfleto 4x4","20x28cm","Couche 90g","20.000","R$ 5.160,00","R$ 4.902,00","—"],
+  ["Folder A4","4x4 · 2 dobras","Couche 90g","500","R$ 808,50","R$ 768,08","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 90g","1.000","R$ 864,00","R$ 820,80","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 90g","2.000","R$ 1.088,00","R$ 1.033,60","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 90g","5.000","R$ 1.736,00","R$ 1.649,20","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 115g","500","R$ 832,00","R$ 790,40","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 115g","1.000","R$ 928,00","R$ 881,60","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 115g","2.000","R$ 1.328,00","R$ 1.261,60","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 115g","5.000","R$ 2.247,50","R$ 2.135,13","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 150g","500","R$ 848,00","R$ 805,60","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 150g","1.000","R$ 1.040,00","R$ 988,00","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 150g","2.000","R$ 1.472,00","R$ 1.398,40","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 150g","5.000","R$ 2.712,50","R$ 2.576,88","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 170g","500","R$ 912,00","R$ 866,40","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 170g","1.000","R$ 1.088,00","R$ 1.033,60","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 170g","2.000","R$ 1.520,00","R$ 1.444,00","5-7 dias"],
+  ["Folder A4","4x4 · 2 dobras","Couche 170g","5.000","R$ 2.774,50","R$ 2.635,78","5-7 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 90g","500","R$ 944,00","R$ 896,80","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 90g","1.000","R$ 1.248,00","R$ 1.185,60","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 90g","2.000","R$ 1.689,50","R$ 1.605,03","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 90g","5.000","R$ 3.084,50","R$ 2.930,28","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 115g","500","R$ 1.088,00","R$ 1.033,60","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 115g","1.000","R$ 1.424,00","R$ 1.352,80","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 115g","2.000","R$ 2.154,50","R$ 2.046,78","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 115g","5.000","R$ 3.675,00","R$ 3.491,25","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 150g","500","R$ 1.264,00","R$ 1.200,80","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 150g","1.000","R$ 1.584,00","R$ 1.504,80","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 150g","2.000","R$ 2.619,50","R$ 2.488,53","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 150g","5.000","R$ 4.485,00","R$ 4.260,75","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 170g","500","R$ 1.360,00","R$ 1.292,00","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 170g","1.000","R$ 1.689,50","R$ 1.605,03","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 170g","2.000","R$ 2.774,50","R$ 2.635,78","7-10 dias"],
+  ["Folder A3","4x4 · 2 dobras","Couche 170g","5.000","R$ 4.725,00","R$ 4.488,75","7-10 dias"],
+  ["Capa de Carne","10x42cm · 4x0","115g","1.000","R$ 676,50","R$ 642,68","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","115g","2.000","R$ 864,00","R$ 820,80","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","115g","3.000","R$ 1.104,00","R$ 1.048,80","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","150g","1.000","R$ 709,50","R$ 674,03","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","150g","2.000","R$ 944,00","R$ 896,80","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","150g","3.000","R$ 1.184,00","R$ 1.124,80","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","170g","1.000","R$ 726,00","R$ 689,70","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","170g","2.000","R$ 1.072,00","R$ 1.018,40","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","170g","3.000","R$ 1.392,00","R$ 1.322,40","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","210g","1.000","R$ 944,00","R$ 896,80","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","210g","2.000","R$ 1.584,00","R$ 1.504,80","5-7 dias"],
+  ["Capa de Carne","10x42cm · 4x0","210g","3.000","R$ 2.092,50","R$ 1.987,88","5-7 dias"],
+  ["Envelope","A5/Carta · 4x0 ou 4x4","Offset 90g","500","R$ 1.264,00","R$ 1.200,80","5-7 dias"],
+  ["Envelope","A5/Carta · 4x0 ou 4x4","Offset 90g","1.000","R$ 1.584,00","R$ 1.504,80","5-7 dias"],
+  ["Envelope","A5/Carta · 4x0 ou 4x4","Offset 90g","1.500","R$ 1.844,50","R$ 1.752,28","5-7 dias"],
+  ["Envelope","A4 34x24cm · 1 lado","Offset 90g","500","R$ 1.520,00","R$ 1.444,00","5-7 dias"],
+  ["Envelope","A4 34x24cm · 1 lado","Offset 90g","1.000","R$ 2.077,00","R$ 1.973,15","5-7 dias"],
+  ["Envelope","A4 34x24cm · 1 lado","Offset 90g","1.500","R$ 2.666,00","R$ 2.532,70","5-7 dias"],
+  ["Envelope","A4 34x24cm · 2 lados","Offset 90g","500","R$ 1.782,50","R$ 1.693,38","5-7 dias"],
+  ["Envelope","A4 34x24cm · 2 lados","Offset 90g","1.000","R$ 2.387,00","R$ 2.267,65","5-7 dias"],
+  ["Envelope","A4 34x24cm · 2 lados","Offset 90g","1.500","R$ 2.976,00","R$ 2.827,20","5-7 dias"],
+];
+
+const PASTAS=[
+  ["Pastas Somente Vinco","R$ 1.040,00","R$ 1.360,00","R$ 2.092,50","R$ 3.675,00"],
+  ["Vinco + Orelha","R$ 1.120,00","R$ 1.440,00","R$ 2.170,00","R$ 3.825,00"],
+  ["Vinco + Bolso Branco","R$ 1.248,00","R$ 1.627,50","R$ 2.712,50","R$ 4.950,00"],
+  ["Vinco + Verniz Total","R$ 1.424,00","R$ 1.705,00","R$ 2.619,50","R$ 4.575,00"],
+  ["Vinco + Verniz Total + Orelha","R$ 1.504,00","R$ 1.536,00","R$ 2.402,50","R$ 4.410,00"],
+  ["Vinco + Verniz Total + Bolso Branco","R$ 1.456,00","R$ 1.875,50","R$ 3.180,00","R$ 5.880,00"],
+  ["Vinco + Verniz Total + Bolso Impresso","R$ 1.875,50","R$ 2.666,00","R$ 4.785,00","R$ 8.850,00"],
+  ["Vinco + Laminacao Fosca","R$ 1.328,00","R$ 1.627,50","R$ 2.774,50","R$ 4.935,00"],
+  ["Vinco + Laminacao Fosca + Orelha","R$ 1.408,00","R$ 1.922,00","R$ 2.852,00","R$ 4.935,00"],
+  ["Vinco + Laminacao Fosca + Bolso","R$ 1.552,00","R$ 1.999,50","R$ 3.315,00","R$ 6.075,00"],
+  ["Vinco + Laminacao Fosca + Bolso Impresso","R$ 2.030,50","R$ 2.774,50","R$ 4.875,00","R$ 9.300,00"],
+];
+
+const MULT=[[0,49,2.5],[50,74,2.0],[75,99,1.8],[100,299,1.7],[300,499,1.65],[500,999,1.6],[1000,1999,1.55],[2000,Infinity,1.5]];
+const AVULSOS=[["WindBanner","R$ 231,20","R$ 219,64"],["Cordao de Cracha","R$ 15,00","R$ 14,25"]];
+
+// ── ESTADO ────────────────────────────────────────────────────
+let PRODUTOS = [...PRODUTOS_DEFAULT];
+let produtoAtual = null;
+let sliderIdx = 0;
+let focusedIdx = -1;
+let filteredList = [];
+let importBuffer = null;
+
+// ── SENHAS ────────────────────────────────────────────────────
+function getSenhas(){
+  return {
+    comercial: localStorage.getItem('fi_senha_comercial') || SENHA_COMERCIAL_DEFAULT,
+    admin: localStorage.getItem('fi_senha_admin') || SENHA_ADMIN_DEFAULT
+  };
+}
+
+// ── LOGIN / SESSÃO ────────────────────────────────────────────
+function fazerLogin(){
+  const pass = document.getElementById('passInput').value;
+  const s = getSenhas();
+  if(pass === s.admin){
+    entrar('admin');
+  } else if(pass === s.comercial){
+    entrar('comercial');
+  } else {
+    const el = document.getElementById('loginError');
+    el.textContent = 'Senha incorreta.';
+    document.getElementById('passInput').value = '';
+    document.getElementById('passInput').focus();
+    setTimeout(()=>el.textContent='', 3000);
+  }
+}
+
+function entrar(nivel){
+  sessionStorage.setItem('fi_nivel', nivel);
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('badgeUser').textContent = nivel === 'admin' ? 'Admin' : 'Comercial';
+  if(nivel === 'admin'){
+    document.getElementById('tabAdmin').classList.remove('hidden');
+    atualizarDbInfo();
+  }
+  carregarDados();
+  inicializar();
+}
+
+function sair(){
+  sessionStorage.removeItem('fi_nivel');
+  location.reload();
+}
+
+// ── DADOS ─────────────────────────────────────────────────────
+function carregarDados(){
+  const saved = localStorage.getItem('fi_produtos');
+  if(saved){
+    try{ PRODUTOS = JSON.parse(saved); } catch(e){ PRODUTOS = [...PRODUTOS_DEFAULT]; }
+  }
+}
+
+// ── FORMAT ────────────────────────────────────────────────────
+function fmt(n){return 'R$ '+n.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function fmtN(n){return n.toLocaleString('pt-BR');}
+
+// ── SEARCH ────────────────────────────────────────────────────
+function onSearch(q){
+  const dd = document.getElementById('dropdown');
+  q = q.trim().toLowerCase();
+  if(!q){ dd.classList.add('hidden'); return; }
+  filteredList = PRODUTOS.filter(p=>(p.nome+' '+p.impressao+' '+p.cat).toLowerCase().includes(q));
+  if(!filteredList.length){
+    dd.innerHTML = '<div class="no-results">Nenhum produto encontrado</div>';
+  } else {
+    dd.innerHTML = filteredList.map((p,i)=>
+      `<div class="dropdown-item" onclick="selecionarProduto(${i})" onmouseover="focusedIdx=${i}">
+        <div class="cat">${p.cat}</div>
+        <b>${p.nome}</b> — ${p.impressao}
+      </div>`
+    ).join('');
+  }
+  focusedIdx = -1;
+  dd.classList.remove('hidden');
+}
+
+function onKey(e){
+  const dd = document.getElementById('dropdown');
+  if(dd.classList.contains('hidden')) return;
+  if(e.key==='ArrowDown'){ focusedIdx=Math.min(focusedIdx+1,filteredList.length-1); highlightDD(); }
+  else if(e.key==='ArrowUp'){ focusedIdx=Math.max(focusedIdx-1,0); highlightDD(); }
+  else if(e.key==='Enter' && focusedIdx>=0){ selecionarProduto(focusedIdx); }
+  else if(e.key==='Escape'){ dd.classList.add('hidden'); }
+}
+
+function highlightDD(){
+  document.querySelectorAll('.dropdown-item').forEach((el,i)=>
+    el.classList.toggle('focused', i===focusedIdx));
+}
+
+function selecionarProduto(idx){
+  produtoAtual = filteredList[idx];
+  document.getElementById('dropdown').classList.add('hidden');
+  document.getElementById('searchInput').value = '';
+
+  document.getElementById('produtoSelecionado').innerHTML =
+    `<div class="produto-selecionado">
+      <div>
+        <div class="nome">${produtoAtual.nome}</div>
+        <div class="sub">${produtoAtual.impressao} · ${produtoAtual.cat} · 91x51mm</div>
+      </div>
+      <button class="btn-limpar" onclick="limpar()" title="Limpar">&times;</button>
+    </div>`;
+  document.getElementById('produtoSelecionado').classList.remove('hidden');
+  document.getElementById('emptyState').classList.add('hidden');
+  document.getElementById('calcBody').classList.remove('hidden');
+
+  const n = produtoAtual.precos.length;
+  const slider = document.getElementById('slider');
+  slider.max = n-1;
+  slider.value = 0;
+  sliderIdx = 0;
+
+  renderPills(0);
+  atualizarSliderFill(slider);
+  atualizarBotoes(0, n-1);
+  atualizarCalc(0);
+}
+
+function limpar(){
+  produtoAtual = null;
+  document.getElementById('produtoSelecionado').classList.add('hidden');
+  document.getElementById('calcBody').classList.add('hidden');
+  document.getElementById('emptyState').classList.remove('hidden');
+  document.getElementById('searchInput').value = '';
+}
+
+// ── SLIDER ────────────────────────────────────────────────────
+function renderPills(ativo){
+  document.getElementById('qtyPills').innerHTML =
+    produtoAtual.precos.map((p,i)=>
+      `<button class="qty-pill${i===ativo?' active':''}" onclick="clicarPill(${i})">${fmtN(p.q)}</button>`
+    ).join('');
+}
+
+function clicarPill(idx){
+  document.getElementById('slider').value = idx;
+  onSlider(idx);
+}
+
+function moverSlider(delta){
+  const slider = document.getElementById('slider');
+  const novo = Math.max(0, Math.min(parseInt(slider.value)+delta, parseInt(slider.max)));
+  slider.value = novo;
+  onSlider(novo);
+}
+
+function onSlider(v){
+  sliderIdx = parseInt(v);
+  document.querySelectorAll('.qty-pill').forEach((el,i)=>
+    el.classList.toggle('active', i===sliderIdx));
+  atualizarSliderFill(document.getElementById('slider'));
+  atualizarBotoes(sliderIdx, parseInt(document.getElementById('slider').max));
+  atualizarCalc(sliderIdx);
+}
+
+function atualizarSliderFill(slider){
+  const pct = slider.max==0 ? 100 : (slider.value/slider.max)*100;
+  slider.style.background =
+    `linear-gradient(to right, #F5C400 ${pct}%, rgba(255,255,255,0.1) ${pct}%)`;
+}
+
+function atualizarBotoes(idx, max){
+  document.getElementById('arrLeft').disabled  = idx <= 0;
+  document.getElementById('arrRight').disabled = idx >= max;
+}
+
+function atualizarCalc(idx){
+  if(!produtoAtual) return;
+  const p = produtoAtual.precos[idx];
+  const primeiro = produtoAtual.precos[0];
+
+  document.getElementById('qtdeBadge').textContent  = fmtN(p.q)+' unidades';
+  document.getElementById('priceCartao').textContent = fmt(p.c);
+  document.getElementById('pricePix').innerHTML =
+    '<small>PIX</small> '+fmt(p.p);
+  document.getElementById('priceUnit').textContent =
+    'R$ '+(p.c/p.q).toFixed(3).replace('.',',')+' por unidade (cartao)';
+
+  const db = document.getElementById('descontoBadge');
+  if(idx===0){
+    db.innerHTML = '';
+  } else {
+    const unitAtual   = p.c/p.q;
+    const unitPrimeiro = primeiro.c/primeiro.q;
+    const desc = ((unitPrimeiro-unitAtual)/unitPrimeiro*100).toFixed(0);
+    db.innerHTML =
+      `<div class="desconto-badge">- ${desc}% por unidade vs ${fmtN(primeiro.q)} un</div>`;
+  }
+
+  const unitPrimeiro = primeiro.c/primeiro.q;
+  document.getElementById('compBody').innerHTML =
+    produtoAtual.precos.map((pr,i)=>{
+      const unit  = pr.c/pr.q;
+      const descTxt = i===0 ? '—' : '-'+((unitPrimeiro-unit)/unitPrimeiro*100).toFixed(0)+'%';
+      const cls   = i===0 ? 'desc-neg' : 'desc-pos';
+      return `<tr${i===idx?' class="highlight"':''}>
+        <td>${fmtN(pr.q)} un</td>
+        <td>${fmt(pr.c)}</td>
+        <td class="pix">${fmt(pr.p)}</td>
+        <td>R$ ${(pr.c/pr.q).toFixed(3).replace('.',',')}/un</td>
+        <td class="${cls}">${descTxt}</td>
+      </tr>`;
+    }).join('');
+}
+
+// ── PANFLETO / FOLDER ─────────────────────────────────────────
+function renderPixel(data){
+  const b = document.getElementById('bPixel');
+  b.innerHTML = '';
+  data.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td>
+      <td style="text-align:right">${r[4]}</td>
+      <td class="pix" style="text-align:right">${r[5]}</td>
+      <td style="font-size:11px;color:var(--muted)">${r[6]}</td>`;
+    b.appendChild(tr);
+  });
+}
+
+function filtrarPixel(){
+  const p = document.getElementById('fProd').value;
+  renderPixel(PIXEL.filter(r=>!p||r[0]===p));
+}
+
+// ── FAIXAS ────────────────────────────────────────────────────
+function calcFaixa(){
+  const c  = parseFloat(document.getElementById('custoTotal').value);
+  const q  = parseFloat(document.getElementById('qtdm2').value);
+  const el = document.getElementById('faixaResult');
+  if(!c || !q){ el.classList.add('hidden'); return; }
+  const m = MULT.find(x=>q>=x[0]&&q<=x[1]);
+  if(!m){ el.classList.add('hidden'); return; }
+  const venda = c * m[2];
+  const pix   = venda * 0.95;
+  document.getElementById('rMult').textContent =
+    q+' m² → multiplicador x '+m[2];
+  document.getElementById('rPix').innerHTML =
+    fmt(pix)+'<small> PIX</small>';
+  document.getElementById('rCartao').textContent = fmt(venda)+' no cartao';
+  document.getElementById('rDet').textContent =
+    'Fornecedor: '+fmt(c)+' x '+m[2]+' = '+fmt(venda);
+  el.classList.remove('hidden');
+}
+
+// ── TABS ──────────────────────────────────────────────────────
+function tab(name, el){
+  ['calc','panfleto','pastas','faixas','avulsos','admin'].forEach(t=>
+    document.getElementById('tab-'+t).classList.add('hidden'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.remove('hidden');
+  el.classList.add('active');
+}
+
+// ── ADMIN: IMPORT ─────────────────────────────────────────────
+function onDrop(e){
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if(file) lerArquivo(file);
+}
+
+function lerArquivo(file){
+  const reader = new FileReader();
+  reader.onload = e => processarCSV(e.target.result);
+  reader.readAsText(file, 'UTF-8');
+}
+
+function processarCSV(text){
+  const lines = text.trim().split('\n');
+  const startIdx = lines[0].toLowerCase().includes('nome') ? 1 : 0;
+  const map = {};
+
+  for(let i=startIdx; i<lines.length; i++){
+    const raw = lines[i];
+    const cols = raw.split(',').map(s=>s.replace(/^"|"$/g,'').trim());
+    if(cols.length < 6) continue;
+    const [nome, impressao, cat, qtde, cartao, pix] = cols;
+    const key = nome+'|'+impressao+'|'+cat;
+    if(!map[key]) map[key] = {nome, impressao, cat, precos:[]};
+    const q = parseInt(String(qtde).replace(/\./g,'').replace(',','.'));
+    const c = parseFloat(String(cartao).replace('R$','').trim().replace(/\./g,'').replace(',','.'));
+    const p = parseFloat(String(pix).replace('R$','').trim().replace(/\./g,'').replace(',','.'));
+    if(!isNaN(q)&&!isNaN(c)&&!isNaN(p)){
+      map[key].precos.push({q,c,p});
+    }
+  }
+
+  importBuffer = Object.values(map);
+  if(!importBuffer.length){
+    document.getElementById('importStatus').innerHTML =
+      '<span class="status-err">Nenhum produto valido encontrado. Verifique o formato do CSV.</span>';
+    return;
+  }
+
+  document.getElementById('importStatus').innerHTML =
+    `<span class="status-ok">${importBuffer.length} produtos encontrados</span>`;
+  document.getElementById('importPreview').innerHTML =
+    `<div class="import-preview">${
+      importBuffer.slice(0,6).map(p=>p.nome+' ('+p.impressao+') — '+p.precos.length+' faixas').join('\n')
+    }${importBuffer.length>6?'\n...+'+( importBuffer.length-6)+' mais':''}</div>`;
+  document.getElementById('importActions').classList.remove('hidden');
+  document.getElementById('importActions').style.display = 'flex';
+}
+
+function aplicarImport(){
+  if(!importBuffer) return;
+  PRODUTOS = importBuffer;
+  localStorage.setItem('fi_produtos', JSON.stringify(PRODUTOS));
+  localStorage.setItem('fi_update', new Date().toLocaleString('pt-BR'));
+  importBuffer = null;
+  document.getElementById('importStatus').innerHTML =
+    '<span class="status-ok">Tabela atualizada com sucesso!</span>';
+  document.getElementById('importPreview').innerHTML = '';
+  document.getElementById('importActions').classList.add('hidden');
+  document.getElementById('fileInput').value = '';
+  atualizarDbInfo();
+  limpar();
+}
+
+function cancelarImport(){
+  importBuffer = null;
+  document.getElementById('importStatus').innerHTML = '';
+  document.getElementById('importPreview').innerHTML = '';
+  document.getElementById('importActions').classList.add('hidden');
+  document.getElementById('fileInput').value = '';
+}
+
+function resetarDados(){
+  if(!confirm('Restaurar os dados originais? A tabela importada sera apagada.')) return;
+  localStorage.removeItem('fi_produtos');
+  localStorage.removeItem('fi_update');
+  PRODUTOS = [...PRODUTOS_DEFAULT];
+  atualizarDbInfo();
+  limpar();
+  document.getElementById('importStatus').innerHTML =
+    '<span class="status-ok">Dados originais restaurados.</span>';
+}
+
+function exportarCSV(){
+  let csv = 'Nome,Impressao,Categoria,Qtde,Cartao,PIX\n';
+  PRODUTOS.forEach(p=>{
+    p.precos.forEach(pr=>{
+      csv += `"${p.nome}","${p.impressao}","${p.cat}",${pr.q},${pr.c.toFixed(2)},${pr.p.toFixed(2)}\n`;
+    });
+  });
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,﻿'+encodeURIComponent(csv);
+  a.download = 'tabela-precos-fabrica.csv';
+  a.click();
+}
+
+function atualizarDbInfo(){
+  const saved = localStorage.getItem('fi_produtos');
+  const el = document.getElementById('dbInfo');
+  if(saved){
+    const d = JSON.parse(saved);
+    const upd = localStorage.getItem('fi_update') || 'data desconhecida';
+    el.textContent = 'Banco importado: '+d.length+' produtos — atualizado em '+upd;
+  } else {
+    el.textContent = 'Usando dados padrao embutidos. Nenhuma importacao registrada neste dispositivo.';
+  }
+}
+
+function salvarSenhas(){
+  const c = document.getElementById('novaSenhaComercial').value.trim();
+  const a = document.getElementById('novaSenhaAdmin').value.trim();
+  const st = document.getElementById('senhaStatus');
+  if(!c||!a){ st.style.color='var(--red)'; st.textContent='Preencha as duas senhas.'; return; }
+  if(c===a){ st.style.color='var(--red)'; st.textContent='As senhas nao podem ser iguais.'; return; }
+  localStorage.setItem('fi_senha_comercial', c);
+  localStorage.setItem('fi_senha_admin', a);
+  st.style.color = 'var(--green)';
+  st.textContent = 'Senhas salvas neste dispositivo.';
+  document.getElementById('novaSenhaComercial').value = '';
+  document.getElementById('novaSenhaAdmin').value = '';
+  setTimeout(()=>st.textContent='', 4000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+function inicializar(){
+  renderPixel(PIXEL);
+
+  PASTAS.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><b>${r[0]}</b></td>
+      <td class="pix">${r[1]}</td><td class="pix">${r[2]}</td>
+      <td class="pix">${r[3]}</td><td class="pix">${r[4]}</td>`;
+    document.getElementById('bPastas').appendChild(tr);
+  });
+
+  AVULSOS.forEach(a=>{
+    document.getElementById('bAvulsos').innerHTML +=
+      `<div class="avulso">
+        <div class="av-nome">${a[0]}</div>
+        <div>
+          <div class="av-cartao">${a[1]}</div>
+          <div class="av-pix">PIX: ${a[2]}</div>
+        </div>
+      </div>`;
+  });
+
+  document.addEventListener('click', e=>{
+    if(!document.getElementById('searchBox').contains(e.target))
+      document.getElementById('dropdown').classList.add('hidden');
+  });
+}
+
+window.onload = function(){
+  const nivel = sessionStorage.getItem('fi_nivel');
+  if(nivel) entrar(nivel);
+  else document.getElementById('passInput').focus();
+};
+</script>
+</body>
+</html>

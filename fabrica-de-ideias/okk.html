@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5L5N3K7K');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cardápios em PVC com Impressão UV | Gráfica Fábrica de Ideias | Fortaleza</title>
+  <meta name="description" content="Cardápios em PVC com impressão UV para restaurantes em Fortaleza-CE. Resistentes à água e gordura, cores vibrantes e entrega em até 3 dias úteis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="./logo 02 grande quadrada.png">
+
+  <style>
+    :root {
+      --yellow:      #F5C400;
+      --yellow-dark: #D4A900;
+      --black:       #000000;
+      --black-soft:  #111111;
+      --white:       #FFFFFF;
+      --gray-100:    #F5F5F5;
+      --gray-500:    #666666;
+      --radius:      8px;
+      --transition:  0.3s ease;
+      --shadow:      0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'Syne', sans-serif; color: var(--black); background: var(--white); overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: 0.03em;
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+    .animate-on-scroll.anim-left  { transform: translateX(-48px); }
+    .animate-on-scroll.anim-right { transform: translateX(48px); }
+    .animate-on-scroll.anim-left.visible,
+    .animate-on-scroll.anim-right.visible { transform: translateX(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* NAVBAR */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      border-bottom-color: rgba(245,196,0,0.15);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .nav-logo img { height: 48px; width: auto; border-radius: 4px; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--yellow);
+      color: var(--black);
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: var(--radius);
+      transition: var(--transition);
+    }
+    .nav-cta:hover { background: var(--yellow-dark); transform: translateY(-2px); }
+
+    /* HERO */
+    #hero {
+      background: var(--black);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Textura FUNDO NOVO (igual à LP principal) */
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('./FUNDO NOVO.png');
+      background-size: 115%;
+      background-position: top left;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(245,196,0,0.08) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #hero > .container { position: relative; z-index: 1; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,196,0,0.1);
+      border: 1px solid rgba(245,196,0,0.25);
+      color: var(--yellow);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .hero-badge span {
+      width: 7px; height: 7px;
+      background: var(--yellow);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.4; transform:scale(0.7); }
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.2rem, 7vw, 5.8rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--yellow);
+    }
+    .hero-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--yellow);
+      color: var(--black);
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 18px 36px;
+      border-radius: 100px;
+      transition: var(--transition);
+      box-shadow: 0 8px 32px rgba(245,196,0,0.3);
+    }
+    .hero-cta:hover { background: var(--yellow-dark); transform: translateY(-3px); box-shadow: 0 14px 40px rgba(245,196,0,0.4); }
+
+    /* Hero visual */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+      min-height: 440px;
+    }
+
+    /* Cardápio 3D com foto real */
+    .hmc-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .hmc {
+      width: 292px;
+      height: 412px;
+      border-radius: 4px;
+      will-change: transform;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+    /* Reflexo especular (specular highlight) */
+    .hmc-shine {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        115deg,
+        transparent 30%,
+        rgba(255,255,255,0.18) 50%,
+        transparent 70%
+      );
+      pointer-events: none;
+      z-index: 20;
+      border-radius: 4px;
+      transition: opacity 0.3s;
+    }
+    /* Frente: foto real do cardápio */
+    .hmc-front {
+      position: absolute;
+      inset: 0;
+      border-radius: 4px;
+      overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+    }
+    .hmc-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+      display: block;
+    }
+    /* Lombada dourada na frente */
+    .hmc-front::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 7px;
+      background: linear-gradient(to bottom, var(--yellow), var(--yellow-dark));
+      z-index: 2;
+    }
+    /* Verso: PVC com marca */
+    .hmc-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 4px;
+      overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: rotateY(180deg);
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hmc-back::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+    .hmc-back-inner {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 32px;
+    }
+    .hmc-back-ornament {
+      font-size: 22px;
+      color: var(--yellow);
+      letter-spacing: 0.4em;
+      opacity: 0.6;
+      margin-bottom: 16px;
+    }
+    .hmc-back-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.2em;
+      color: var(--yellow);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .hmc-back-tag {
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 28px;
+    }
+    .hmc-back-line {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--yellow-dark), transparent);
+      margin: 0 auto 28px;
+    }
+    .hmc-back-uv {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(245,196,0,0.25);
+      border-radius: 100px;
+      padding: 7px 14px;
+    }
+    .hmc-back-uv span {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+    }
+    .hmc-back-uv svg { width: 13px; height: 13px; fill: var(--yellow); opacity: 0.8; }
+
+    /* Vídeo do cardápio */
+    .cardapio-video {
+      display: block;
+      width: 340px;
+      position: relative;
+      z-index: 1;
+    }
+    /* Vignette que funde o fundo do vídeo com o preto do site */
+    .hmc-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(ellipse 60% 70% at center, transparent 45%, #000000 75%);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .mbadge { z-index: 3; }
+
+    /* Floating badges */
+    .mbadge {
+      position: absolute;
+      background: #1a1a1a;
+      border: 1px solid rgba(245,196,0,0.25);
+      border-radius: 100px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+    .mbadge-uv {
+      top: -16px;
+      right: -24px;
+      background: var(--yellow);
+      border: none;
+    }
+    .mbadge-uv svg { width: 14px; height: 14px; fill: var(--black); }
+    .mbadge-uv span { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.1em; color: var(--black); }
+    .mbadge-time {
+      bottom: 32px;
+      left: -36px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      overflow: hidden;
+    }
+    .mbadge-time::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.18) 50%, transparent 80%);
+      animation: shine-sweep 2.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes shine-sweep {
+      0%   { left: -75%; }
+      40%  { left: 125%; }
+      100% { left: 125%; }
+    }
+    .mbadge-time-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--yellow);
+      line-height: 1;
+    }
+    .mbadge-time-label { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 500; }
+    .mbadge-resist {
+      bottom: -14px;
+      right: -20px;
+      gap: 6px;
+      padding: 10px 16px;
+    }
+    .mbadge-resist svg { width: 14px; height: 14px; color: var(--yellow); }
+    .mbadge-resist span { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); }
+
+    /* PROOF BAR */
+    #proof-bar {
+      background: #0d0d0d;
+      border-top: 1px solid rgba(245,196,0,0.12);
+      border-bottom: 1px solid rgba(245,196,0,0.12);
+      padding: 32px 0;
+    }
+    .proof-label {
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .clients-track-wrapper {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+    .clients-track-wrapper::before,
+    .clients-track-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .clients-track-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, #0d0d0d, transparent);
+    }
+    .clients-track-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, #0d0d0d, transparent);
+    }
+    .clients-track {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      width: max-content;
+      animation: logos-scroll 18s linear infinite;
+    }
+    @keyframes logos-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-33.333%); }
+    }
+    .client-logo-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      border-radius: 10px;
+      background: #ffffff;
+      flex-shrink: 0;
+      transition: box-shadow 0.3s ease;
+    }
+    .client-logo-item:hover {
+      box-shadow: 0 4px 20px rgba(245,196,0,0.25);
+    }
+    .client-logo-item img {
+      height: 44px;
+      width: auto;
+      max-width: 140px;
+      object-fit: contain;
+    }
+
+    /* BENEFICIOS */
+    #beneficios {
+      background: var(--white);
+      padding: 96px 0;
+    }
+    .beneficios-head {
+      text-align: center;
+      max-width: 580px;
+      margin: 0 auto 56px;
+    }
+    .beneficios-head p {
+      font-size: 16px;
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+    .beneficios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .ben-card {
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 36px 28px;
+      transition: var(--transition);
+    }
+    .ben-card:hover {
+      border-color: var(--yellow);
+      box-shadow: 0 8px 32px rgba(245,196,0,0.1);
+      transform: translateY(-4px);
+    }
+    .ben-icon {
+      width: 52px; height: 52px;
+      background: rgba(245,196,0,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .ben-icon svg { width: 24px; height: 24px; color: var(--yellow-dark); }
+    .ben-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .ben-card p { font-size: 14px; color: var(--gray-500); line-height: 1.65; }
+
+    /* SHOWCASE (foto real) */
+    #showcase {
+      background: #0d0d0d;
+      padding: 96px 0;
+    }
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .showcase-photo-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .showcase-photo-mat {
+      max-width: 420px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .showcase-photo-mat img {
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      border-radius: 12px;
+      filter: drop-shadow(0 32px 64px rgba(0,0,0,0.8));
+    }
+    .showcase-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,196,0,0.12);
+      border: 1px solid rgba(245,196,0,0.25);
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-top: 24px;
+    }
+    .showcase-tag span {
+      width: 6px; height: 6px;
+      background: var(--yellow);
+      border-radius: 50%;
+    }
+    .showcase-text { padding-bottom: 16px; }
+    .showcase-text .section-title { color: var(--white); margin-bottom: 16px; }
+    .showcase-text > p { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.75; margin-bottom: 28px; }
+    .showcase-checks { display: flex; flex-direction: column; gap: 14px; }
+    .scheck {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .scheck-icon {
+      width: 22px; height: 22px;
+      background: rgba(245,196,0,0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .scheck-icon svg { width: 12px; height: 12px; color: var(--yellow); }
+    .scheck p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.55; margin: 0; }
+    .scheck strong { color: var(--white); font-weight: 700; }
+
+    /* CONVERSAO */
+    #conversao {
+      background: var(--black);
+      padding: 96px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Textura FUNDO.png (neural network amarela) */
+    #conversao::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('./FUNDO.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #conversao::before {
+      content: '';
+      position: absolute;
+      bottom: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(245,196,0,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #conversao > .container { position: relative; z-index: 1; }
+    .conversao-head {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 64px;
+    }
+    .conversao-head .section-title { color: var(--white); margin-bottom: 14px; }
+    .conversao-head p { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+    .conversao-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .conv-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .conv-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--yellow);
+      border-radius: 3px 3px 0 0;
+    }
+    .conv-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      color: var(--yellow);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .conv-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .conv-source {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* PROVA SOCIAL */
+    #prova {
+      background: var(--gray-100);
+      padding: 80px 0;
+    }
+    .prova-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 64px;
+      flex-wrap: wrap;
+    }
+    .prova-text { flex: 1; min-width: 280px; }
+    .prova-text h2 { color: var(--black); margin-bottom: 12px; }
+    .prova-text p { color: var(--gray-500); font-size: 16px; line-height: 1.7; margin-top: 12px; }
+    .prova-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+    .prova-numbers { display: flex; gap: 32px; }
+    .pstat { text-align: center; }
+    .pstat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--black);
+      line-height: 1;
+    }
+    .pstat-label {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+    .google-rating-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+    }
+    .google-logo {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .google-logo .g-blue   { color: #4285F4; }
+    .google-logo .g-red    { color: #EA4335; }
+    .google-logo .g-yellow { color: #FBBC05; }
+    .google-logo .g-green  { color: #34A853; }
+    .google-stars { display: flex; gap: 3px; margin-bottom: 3px; }
+    .google-stars svg { width: 16px; height: 16px; fill: #FBBC05; }
+    .google-rating-text { font-size: 12px; font-weight: 600; color: var(--gray-500); }
+
+    /* COMO FUNCIONA */
+    #como {
+      background: var(--white);
+      padding: 96px 0;
+    }
+    .como-head { text-align: center; margin-bottom: 56px; }
+    .como-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .como-step {
+      text-align: center;
+      padding: 32px 20px;
+      background: var(--gray-100);
+      border-radius: 16px;
+      position: relative;
+    }
+    .como-step::after {
+      content: '';
+      position: absolute;
+      right: -13px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-left: 10px solid var(--yellow);
+    }
+    .como-step:last-child::after { display: none; }
+    .como-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: rgba(245,196,0,0.25);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .como-step h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .como-step p { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+
+    /* FORMULARIO */
+    #orcamento {
+      background: var(--black);
+      padding: 96px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #orcamento::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(245,196,0,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .form-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .form-head { text-align: center; margin-bottom: 40px; }
+    .form-head .section-title { color: var(--white); margin-bottom: 12px; }
+    .form-head p { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+    .orcamento-form {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      padding: 40px;
+    }
+    .form-row { display: grid; gap: 20px; margin-bottom: 20px; }
+    .form-row-2 { grid-template-columns: 1fr 1fr; }
+    .form-group { position: relative; }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      padding: 20px 16px 8px;
+      outline: none;
+      transition: border-color var(--transition), background var(--transition);
+      appearance: none;
+    }
+    .form-group textarea { resize: none; min-height: 90px; }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--yellow);
+      background: rgba(245,196,0,0.06);
+    }
+    .form-group label {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+    .form-group textarea ~ label { top: 20px; transform: none; }
+    .form-group input:focus ~ label,
+    .form-group input:not(:placeholder-shown) ~ label,
+    .form-group textarea:focus ~ label,
+    .form-group textarea:not(:placeholder-shown) ~ label {
+      top: 8px;
+      transform: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--yellow);
+    }
+    .form-group label span { color: var(--yellow); }
+    .form-submit-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--yellow);
+      color: var(--black);
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 18px 36px;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 8px;
+    }
+    .form-submit-btn:hover {
+      background: var(--yellow-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(245,196,0,0.35);
+    }
+    .form-submit-btn svg { width: 20px; height: 20px; }
+    .form-disclaimer { text-align: center; font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 16px; }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .form-success-icon {
+      width: 64px; height: 64px;
+      background: rgba(245,196,0,0.12);
+      border: 2px solid var(--yellow);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .form-success-icon svg { width: 28px; height: 28px; color: var(--yellow); }
+    .form-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--white); letter-spacing: 0.04em; margin-bottom: 12px; }
+    .form-success p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+    /* FOOTER */
+    footer {
+      background: #0a0a0a;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-inner img { height: 40px; }
+    .footer-info { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+    .footer-info a { color: rgba(255,255,255,0.5); transition: color var(--transition); }
+    .footer-info a:hover { color: var(--yellow); }
+
+    /* FLOATING WA */
+    #float-wa {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 56px; height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+      z-index: 999;
+      transition: var(--transition);
+    }
+    #float-wa:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
+    #float-wa svg { width: 28px; height: 28px; fill: white; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { order: -1; }
+      .beneficios-grid { grid-template-columns: 1fr 1fr; }
+      .showcase-grid { grid-template-columns: 1fr; gap: 48px; }
+      .showcase-photo-mat { max-width: 360px; padding: 20px; }
+      .como-grid { grid-template-columns: 1fr 1fr; }
+      .como-step::after { display: none; }
+      .conversao-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+    @media (max-width: 600px) {
+      .beneficios-grid { grid-template-columns: 1fr; }
+      .como-grid { grid-template-columns: 1fr; }
+      .form-row-2 { grid-template-columns: 1fr; }
+      .orcamento-form { padding: 28px 20px; }
+      .prova-inner { flex-direction: column; text-align: center; }
+      .prova-numbers { justify-content: center; }
+      .mbadge-time { display: none; }
+      .mbadge-resist { display: none; }
+      .conv-card { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5L5N3K7K" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- NAVBAR -->
+  <header id="navbar">
+    <div class="container">
+      <nav class="nav-inner">
+        <a class="nav-logo" href="#hero">
+          <img src="./logo 02 grande quadrada.png" alt="Gráfica Fábrica de Ideias" />
+        </a>
+        <a href="https://wa.me/5585988461515?text=Ol%C3%A1%21+Vim+pelo+site+e+gostaria+de+um+or%C3%A7amento." target="_blank" rel="noopener" class="nav-cta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          Solicitar Orçamento
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span></span>
+            Fortaleza-CE · Aldeota
+          </div>
+          <h1 class="hero-title">
+            Impressione antes<br>de servir o<br><em>primeiro prato</em>
+          </h1>
+          <p class="hero-sub">
+            Cardápios em PVC com impressão UV. Cores que não desbotam, resistência que não falha — prontos em até <strong style="color:var(--white)">3 dias úteis</strong>.
+          </p>
+          <a href="https://wa.me/5585988461515?text=Ol%C3%A1%21+Vim+pelo+site+e+gostaria+de+um+or%C3%A7amento." target="_blank" rel="noopener" class="hero-cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+            Pedir Orçamento Grátis
+          </a>
+        </div>
+
+        <div class="hero-visual animate-on-scroll anim-right">
+          <div class="hmc-wrap">
+            <video
+              class="cardapio-video"
+              src="./Gravação de Tela 2026-05-11 às 23.33.10.mov"
+              muted playsinline
+            ></video>
+
+            <div class="mbadge mbadge-uv">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span>PVC + UV</span>
+            </div>
+            <div class="mbadge mbadge-time">
+              <div class="mbadge-time-num">3</div>
+              <div class="mbadge-time-label">dias úteis para entrega</div>
+            </div>
+            <div class="mbadge mbadge-resist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Resistente à água</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF BAR -->
+  <section id="proof-bar">
+    <div class="proof-label">Algumas marcas que já confiam</div>
+    <div class="clients-track-wrapper">
+      <div class="clients-track">
+        <div class="client-logo-item"><img src="./image-removebg-preview (32).png" alt="Vasto" /></div>
+        <div class="client-logo-item"><img src="./image-removebg-preview (28).png" alt="Coco Bambu" /></div>
+        <div class="client-logo-item"><img src="./image-removebg-preview (35).png" alt="Chiquinho" /></div>
+        <div class="client-logo-item"><img src="./image-removebg-preview (38).png" alt="San Paolo" /></div>
+        <div class="client-logo-item" aria-hidden="true"><img src="./image-removebg-preview (32).png" alt="" /></div>
+        <div class="client-logo-item" aria-hidden="true"><img src="./image-removebg-preview (28).png" alt="" /></div>
+        <div class="client-logo-item" aria-hidden="true"><img src="./image-removebg-preview (35).png" alt="" /></div>
+        <div class="client-logo-item" aria-hidden="true"><img src="./image-removebg-preview (38).png" alt="" /></div>
+        <div class="client-logo-item" aria-hidden="true"><img src="./image-removebg-preview (32).png" alt="" /></div>
+        <div class="client-logo-item" aria-hidden="true"><img src="./image-removebg-preview (28).png" alt="" /></div>
+        <div class="client-logo-item" aria-hidden="true"><img src="./image-removebg-preview (35).png" alt="" /></div>
+        <div class="client-logo-item" aria-hidden="true"><img src="./image-removebg-preview (38).png" alt="" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section id="beneficios">
+    <div class="container">
+      <div class="beneficios-head animate-on-scroll anim-left">
+        <span class="section-label">Por que PVC com impressão UV?</span>
+        <h2 class="section-title">Feito para durar no dia a dia mais pesado</h2>
+        <p>Nenhum cardápio amassado, desbotado ou rasgado na mão do seu cliente.</p>
+      </div>
+      <div class="beneficios-grid">
+        <div class="ben-card animate-on-scroll delay-1 anim-left">
+          <div class="ben-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Resistente à água e gordura</h3>
+          <p>O PVC não absorve umidade nem manchas. Água, molho, óleo — limpa com um pano e fica como novo.</p>
+        </div>
+        <div class="ben-card animate-on-scroll delay-2">
+          <div class="ben-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </div>
+          <h3>Cores que não desbotam</h3>
+          <p>A impressão UV cura com luz ultravioleta, fixando as cores com profundidade e brilho que duram anos.</p>
+        </div>
+        <div class="ben-card animate-on-scroll delay-3 anim-right">
+          <div class="ben-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Pronto em até 3 dias úteis</h3>
+          <p>Produção ágil sem abrir mão da qualidade. Enviamos ou você retira na Aldeota, Fortaleza-CE.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE (foto real do produto) -->
+  <section id="showcase">
+    <div class="container">
+      <div class="showcase-grid">
+        <div class="showcase-photo-wrap animate-on-scroll anim-left">
+          <div>
+            <div class="showcase-photo-mat">
+              <img src="./Fotocardapio. .png" alt="Cardápio em PVC produzido pela Gráfica Fábrica de Ideias" />
+            </div>
+            <div class="showcase-tag">
+              <span></span>
+              Produzido por nós
+            </div>
+          </div>
+        </div>
+        <div class="showcase-text animate-on-scroll delay-1 anim-right">
+          <span class="section-label">Resultado real</span>
+          <h2 class="section-title">É assim que o seu cardápio vai ficar</h2>
+          <p>Cores exatas, contrastes nítidos e acabamento que valoriza cada detalhe da sua marca. O que você vê no arquivo é o que chega na sua mão.</p>
+          <div class="showcase-checks">
+            <div class="scheck">
+              <div class="scheck-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <p><strong>Impressão UV direta no PVC</strong> — sem laminação que descola ou papel que rasga</p>
+            </div>
+            <div class="scheck">
+              <div class="scheck-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <p><strong>Fidelidade total de cor</strong> — cores Pantone e CMYK reproduzidas com precisão</p>
+            </div>
+            <div class="scheck">
+              <div class="scheck-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <p><strong>Diversos formatos e tamanhos</strong> — A4, A5, formato personalizado, paisagem ou retrato</p>
+            </div>
+            <div class="scheck">
+              <div class="scheck-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <p><strong>Não tem arte pronta?</strong> Nossa equipe cria o layout para você</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONVERSAO (dados sobre impacto do cardápio) -->
+  <section id="conversao">
+    <div class="container">
+      <div class="conversao-head animate-on-scroll anim-left">
+        <span class="section-label">O cardápio é a vitrine do seu restaurante</span>
+        <h2 class="section-title">Cardápio bonito vende mais. Muito mais.</h2>
+        <p>Não é só estética. Pesquisas da indústria de food service mostram que o design do cardápio impacta diretamente no faturamento e na percepção de qualidade do cliente.</p>
+      </div>
+      <div class="conversao-grid">
+        <div class="conv-card animate-on-scroll delay-1 anim-left">
+          <div class="conv-num">+30%</div>
+          <div class="conv-text">de aumento no ticket médio em restaurantes que investiram em cardápios visuais bem elaborados</div>
+          <div class="conv-source">Cornell School of Hotel Administration</div>
+        </div>
+        <div class="conv-card animate-on-scroll delay-2">
+          <div class="conv-num">2x</div>
+          <div class="conv-text">mais chances do cliente pedir pratos premium quando apresentados com imagem e descrição de qualidade</div>
+          <div class="conv-source">Menu Engineering Studies</div>
+        </div>
+        <div class="conv-card animate-on-scroll delay-3 anim-right">
+          <div class="conv-num">68%</div>
+          <div class="conv-text">dos consumidores julgam a qualidade do restaurante pelo cardápio antes mesmo de provar a comida</div>
+          <div class="conv-source">National Restaurant Association</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROVA SOCIAL -->
+  <section id="prova">
+    <div class="container">
+      <div class="prova-inner">
+        <div class="prova-text animate-on-scroll anim-left">
+          <span class="section-label">Quem já confia</span>
+          <h2 class="section-title">Clientes que exigem o melhor e encontraram aqui</h2>
+          <p>Vasto Restaurante, Casacor, Iguatemi e Helânia são alguns dos nomes que confiam na qualidade da Fábrica de Ideias.</p>
+        </div>
+        <div class="prova-right animate-on-scroll delay-1 anim-right">
+          <div class="prova-numbers">
+            <div class="pstat">
+              <div class="pstat-num">20+</div>
+              <div class="pstat-label">anos de mercado</div>
+            </div>
+            <div class="pstat">
+              <div class="pstat-num">1h</div>
+              <div class="pstat-label">para o orçamento</div>
+            </div>
+          </div>
+          <div class="google-rating-card">
+            <div class="google-logo">
+              <span class="g-blue">G</span><span class="g-red">o</span><span class="g-yellow">o</span><span class="g-blue">g</span><span class="g-green">l</span><span class="g-red">e</span>
+            </div>
+            <div>
+              <div class="google-stars">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div class="google-rating-text">5,0 · Nota máxima no Google</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section id="como">
+    <div class="container">
+      <div class="como-head animate-on-scroll anim-left">
+        <span class="section-label">Processo simples</span>
+        <h2 class="section-title">Do pedido ao cardápio em 4 passos</h2>
+      </div>
+      <div class="como-grid">
+        <div class="como-step animate-on-scroll delay-1 anim-left">
+          <div class="como-num">01</div>
+          <h3>Solicite o orçamento</h3>
+          <p>Preencha o formulário. Retornamos em até 1 hora com o valor.</p>
+        </div>
+        <div class="como-step animate-on-scroll delay-2 anim-left">
+          <div class="como-num">02</div>
+          <h3>Aprove e envie o arquivo</h3>
+          <p>Aprovado o orçamento, mande a arte. Não tem? A gente cria.</p>
+        </div>
+        <div class="como-step animate-on-scroll delay-3 anim-right">
+          <div class="como-num">03</div>
+          <h3>Produção em até 3 dias</h3>
+          <p>Impressão UV de alta resolução com acabamento premium.</p>
+        </div>
+        <div class="como-step animate-on-scroll delay-4 anim-right">
+          <div class="como-num">04</div>
+          <h3>Retirada ou entrega</h3>
+          <p>Retire na Aldeota ou receba via entregador (a combinar).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <img src="./logo 02 grande quadrada.png" alt="Gráfica Fábrica de Ideias" />
+        <div class="footer-info">
+          Av. Santos Dumont, 1740, lojas 10/11, Aldeota, Fortaleza-CE<br>
+          <a href="tel:+5585988461515">(85) 98846-1515</a> · Seg a Sex, 08h às 18h
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.2)">© 2024 Fábrica de Ideias</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a id="float-wa" href="https://wa.me/5585988461515?text=Ol%C3%A1%21+Vim+atrav%C3%A9s+do+site+e+gostaria+de+um+or%C3%A7amento+de+card%C3%A1pios." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    /* NAVBAR */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    /* SMOOTH SCROLL */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
+      });
+    });
+
+    /* SCROLL REVEAL */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => revealObserver.observe(el));
+
+    /* VÍDEO PING-PONG SUAVE */
+    (function() {
+      const video = document.querySelector('.cardapio-video');
+      if (!video) return;
+      let dir = 1;
+      let time = 0;
+      let lastTs = null;
+      const SPEED = 0.25; // 0.25x velocidade
+
+      video.addEventListener('loadedmetadata', () => {
+        video.pause();
+        function frame(ts) {
+          if (lastTs !== null) {
+            const dt = Math.min((ts - lastTs) / 1000, 0.05);
+            time += dir * SPEED * dt;
+            if (time >= video.duration) { time = video.duration; dir = -1; }
+            if (time <= 0)              { time = 0;               dir =  1; }
+            video.currentTime = time;
+          }
+          lastTs = ts;
+          requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      });
+    })();
+
+
+
+
+  </script>
+</body>
+</html>

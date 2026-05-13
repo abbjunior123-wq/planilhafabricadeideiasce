@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório de Performance — Fábrica de Ideias | Abril 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --navy:       #0b1629;
+  --navy-mid:   #112040;
+  --navy-card:  #152850;
+  --navy-light: #1d3666;
+  --gold:       #f5c518;
+  --gold-lt:    #fdd94e;
+  --gold-pale:  rgba(245,197,24,.12);
+  --white:      #ffffff;
+  --text-muted: #7b93b8;
+  --text-dim:   #a8bdd4;
+  --border:     rgba(255,255,255,.07);
+  --green:      #34d399;
+  --red:        #f87171;
+  --blue-hl:    #60a5fa;
+  --shadow:     0 4px 30px rgba(0,0,0,.4);
+  --shadow-card:0 2px 16px rgba(0,0,0,.3);
+}
+
+body {
+  font-family:'Inter', sans-serif;
+  background: #080f1e;
+  color: var(--white);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  min-height: 100vh;
+}
+
+/* ── LAYOUT ───────────────────────────────────────────── */
+.wrap {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+/* ── HEADER ───────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, #0b1629 0%, #112b52 50%, #0b1629 100%);
+  border-bottom: 2px solid var(--gold);
+  padding: 48px 0 40px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(245,197,24,.06) 0%, transparent 70%);
+}
+.header-inner {
+  max-width:920px; margin:0 auto; padding:0 24px;
+  display:flex; justify-content:space-between; align-items:flex-end;
+  position:relative;
+}
+.brand-name {
+  font-family:'Outfit',sans-serif;
+  font-size: 13px; font-weight:600; letter-spacing:3px;
+  text-transform:uppercase; color: var(--gold);
+  margin-bottom:10px;
+}
+.report-title {
+  font-family:'Outfit',sans-serif;
+  font-size: 36px; font-weight:800; line-height:1.1;
+  color: var(--white);
+}
+.report-title span { color: var(--gold); }
+.report-meta {
+  text-align:right;
+}
+.period-badge {
+  background: var(--gold-pale);
+  border: 1px solid rgba(245,197,24,.3);
+  color: var(--gold);
+  font-size:12px; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:6px 14px; border-radius:20px;
+  display:inline-block; margin-bottom:8px;
+}
+.platform-tag {
+  font-size:12px; color:var(--text-muted);
+  display:block;
+}
+.platform-dot {
+  display:inline-block;
+  width:7px; height:7px; border-radius:50%;
+  margin-right:5px;
+  vertical-align:middle;
+}
+.dot-meta { background:#1877f2; }
+.dot-google { background:#ea4335; }
+
+/* ── SECTION TITLE ────────────────────────────────────── */
+.section {
+  margin-top:40px;
+}
+.section-title {
+  font-family:'Outfit',sans-serif;
+  font-size:13px; font-weight:700; letter-spacing:2.5px;
+  text-transform:uppercase; color:var(--gold);
+  margin-bottom:20px;
+  display:flex; align-items:center; gap:10px;
+}
+.section-title::after {
+  content:''; flex:1; height:1px;
+  background: linear-gradient(90deg, rgba(245,197,24,.3), transparent);
+}
+
+/* ── KPI GRID ─────────────────────────────────────────── */
+.kpi-grid {
+  display:grid;
+  grid-template-columns: repeat(4,1fr);
+  gap:14px;
+}
+.kpi-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius:14px;
+  padding:20px 18px;
+  position:relative;
+  overflow:hidden;
+  transition: transform .2s;
+}
+.kpi-card.gold-border {
+  border-color: rgba(245,197,24,.35);
+  background: linear-gradient(135deg, #152850 0%, #1a2e55 100%);
+}
+.kpi-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  opacity:0;
+}
+.kpi-card.gold-border::before { opacity:1; }
+.kpi-icon {
+  font-size:18px; margin-bottom:10px;
+}
+.kpi-label {
+  font-size:10px; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--text-muted);
+  margin-bottom:6px;
+}
+.kpi-value {
+  font-family:'Outfit',sans-serif;
+  font-size:28px; font-weight:800; line-height:1;
+  color:var(--white);
+}
+.kpi-value.gold { color:var(--gold); }
+.kpi-sub {
+  font-size:11px; color:var(--text-muted);
+  margin-top:5px;
+}
+
+/* ── CAMPAIGN CARDS ───────────────────────────────────── */
+.camp-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:18px;
+}
+.camp-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+}
+.camp-header {
+  padding:18px 22px 14px;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:12px;
+}
+.camp-type-badge {
+  font-size:10px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:4px 10px; border-radius:20px;
+}
+.badge-mensagem {
+  background: rgba(96,165,250,.15);
+  color:#60a5fa;
+  border:1px solid rgba(96,165,250,.3);
+}
+.badge-leads {
+  background: rgba(52,211,153,.15);
+  color:#34d399;
+  border:1px solid rgba(52,211,153,.3);
+}
+.camp-name {
+  font-family:'Outfit',sans-serif;
+  font-size:16px; font-weight:700; color:var(--white);
+  flex:1;
+}
+.camp-status {
+  font-size:10px; font-weight:700; letter-spacing:1px;
+  color:#34d399;
+}
+.camp-body {
+  padding:18px 22px;
+}
+.camp-spend {
+  font-family:'Outfit',sans-serif;
+  font-size:32px; font-weight:800; color:var(--gold);
+  margin-bottom:4px;
+}
+.camp-spend-label {
+  font-size:11px; color:var(--text-muted); margin-bottom:18px;
+}
+.metrics-row {
+  display:grid; grid-template-columns: repeat(3,1fr);
+  gap:10px; margin-bottom:14px;
+}
+.metric-item {
+  background: rgba(255,255,255,.04);
+  border-radius:10px; padding:10px;
+}
+.metric-label {
+  font-size:9px; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--text-muted);
+  margin-bottom:4px;
+}
+.metric-value {
+  font-family:'Outfit',sans-serif;
+  font-size:18px; font-weight:700; color:var(--white);
+}
+.metric-value.accent { color:var(--gold); }
+.metric-value.green { color:#34d399; }
+.metric-value.blue { color:#60a5fa; }
+.highlight-box {
+  background: var(--gold-pale);
+  border: 1px solid rgba(245,197,24,.25);
+  border-radius:12px;
+  padding:14px 16px;
+  display:flex; align-items:center; gap:14px;
+}
+.highlight-icon { font-size:22px; }
+.highlight-label {
+  font-size:10px; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--gold);
+  margin-bottom:2px;
+}
+.highlight-value {
+  font-family:'Outfit',sans-serif;
+  font-size:24px; font-weight:800; color:var(--white);
+}
+.highlight-sub {
+  font-size:11px; color:var(--text-muted); margin-top:2px;
+}
+
+/* ── CREATIVES ────────────────────────────────────────── */
+.creative-list {
+  display:flex; flex-direction:column; gap:10px;
+}
+.creative-item {
+  background: var(--navy-card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 18px;
+  display:flex; align-items:center; gap:16px;
+}
+.creative-item.top {
+  border-color: rgba(245,197,24,.4);
+  background: linear-gradient(135deg, #152850, #1c3260);
+}
+.creative-rank {
+  font-family:'Outfit',sans-serif;
+  font-size:22px; font-weight:800; color:var(--text-muted);
+  min-width:32px;
+}
+.creative-rank.gold-text { color:var(--gold); }
+.creative-rank.silver { color:#a0aec0; }
+.creative-rank.bronze { color:#c6a86e; }
+.creative-info { flex:1; min-width:0; }
+.creative-name {
+  font-weight:700; font-size:15px; color:var(--white);
+  margin-bottom:2px;
+}
+.creative-camp {
+  font-size:11px; color:var(--text-muted);
+}
+.creative-badge {
+  font-size:9px; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase;
+  padding:2px 8px; border-radius:10px;
+  margin-left:6px;
+}
+.badge-best-cost { background:rgba(52,211,153,.15); color:#34d399; border:1px solid rgba(52,211,153,.3); }
+.badge-best-ctr  { background:rgba(245,197,24,.15); color:var(--gold); border:1px solid rgba(245,197,24,.3); }
+.badge-all-leads { background:rgba(96,165,250,.15); color:#60a5fa; border:1px solid rgba(96,165,250,.3); }
+.creative-stats {
+  display:flex; gap:20px; text-align:right;
+}
+.cstat { }
+.cstat-label {
+  font-size:9px; font-weight:600; letter-spacing:1px;
+  text-transform:uppercase; color:var(--text-muted);
+  margin-bottom:2px;
+}
+.cstat-value {
+  font-family:'Outfit',sans-serif;
+  font-size:16px; font-weight:700; color:var(--white);
+}
+.cstat-value.gold { color:var(--gold); }
+.cstat-value.green { color:#34d399; }
+
+/* ── ANALYSIS BOX ─────────────────────────────────────── */
+.analysis-card {
+  background: var(--navy-card);
+  border:1px solid rgba(96,165,250,.25);
+  border-left: 3px solid #60a5fa;
+  border-radius:14px;
+  padding:24px;
+}
+.analysis-question {
+  display:flex; align-items:flex-start; gap:14px;
+  margin-bottom:20px;
+}
+.analysis-q-icon {
+  font-size:28px; margin-top:2px; flex-shrink:0;
+}
+.analysis-q-text {
+  font-family:'Outfit',sans-serif;
+  font-size:17px; font-weight:700; color:var(--white);
+  line-height:1.4;
+}
+.analysis-q-sub { font-size:13px; color:var(--text-muted); font-weight:400; margin-top:4px; }
+.reasons-grid {
+  display:grid; grid-template-columns: 1fr 1fr;
+  gap:12px;
+}
+.reason-item {
+  background: rgba(255,255,255,.04);
+  border-radius:10px; padding:14px;
+  display:flex; gap:12px;
+}
+.reason-icon { font-size:22px; flex-shrink:0; }
+.reason-title {
+  font-weight:700; font-size:13px; color:var(--white);
+  margin-bottom:4px;
+}
+.reason-text {
+  font-size:12px; color:var(--text-dim); line-height:1.5;
+}
+.analysis-conclusion {
+  margin-top:16px;
+  background: rgba(52,211,153,.08);
+  border:1px solid rgba(52,211,153,.2);
+  border-radius:10px; padding:14px 16px;
+  font-size:13px; color:var(--white);
+  line-height:1.6;
+}
+.analysis-conclusion strong { color:#34d399; }
+
+/* ── RECS ─────────────────────────────────────────────── */
+.recs-list {
+  display:flex; flex-direction:column; gap:10px;
+}
+.rec-item {
+  background: var(--navy-card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px 18px;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.rec-icon { font-size:22px; flex-shrink:0; margin-top:1px; }
+.rec-title { font-weight:700; font-size:14px; color:var(--white); margin-bottom:3px; }
+.rec-text { font-size:12px; color:var(--text-dim); line-height:1.5; }
+.rec-priority {
+  font-size:9px; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase; padding:2px 8px; border-radius:10px;
+  align-self:flex-start; margin-top:2px; flex-shrink:0;
+}
+.priority-high { background:rgba(248,113,113,.15); color:#f87171; border:1px solid rgba(248,113,113,.3); }
+.priority-med  { background:rgba(245,197,24,.12); color:var(--gold); border:1px solid rgba(245,197,24,.25); }
+
+/* ── FOOTER ───────────────────────────────────────────── */
+.footer {
+  margin-top:50px;
+  border-top:1px solid var(--border);
+  padding-top:24px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.footer-brand {
+  font-family:'Outfit',sans-serif;
+  font-size:13px; font-weight:700; color:var(--gold);
+}
+.footer-note {
+  font-size:11px; color:var(--text-muted);
+}
+.footer-date {
+  font-size:11px; color:var(--text-muted);
+  text-align:right;
+}
+
+/* ── DIVIDER ──────────────────────────────────────────── */
+.divider { height:1px; background:var(--border); margin:32px 0; }
+
+/* ── PLATFORM ROW ─────────────────────────────────────── */
+.platform-header {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:18px;
+}
+.platform-logo {
+  width:32px; height:32px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px;
+}
+.platform-logo.meta { background:linear-gradient(135deg,#0082fb,#00b4ff); }
+.platform-logo.google { background:linear-gradient(135deg,#ea4335,#fbbc04 50%,#34a853); }
+.platform-title {
+  font-family:'Outfit',sans-serif;
+  font-size:18px; font-weight:800; color:var(--white);
+}
+.platform-period { font-size:12px; color:var(--text-muted); margin-top:1px; }
+.platform-total {
+  margin-left:auto;
+  text-align:right;
+}
+.platform-total-label { font-size:10px; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase; }
+.platform-total-value {
+  font-family:'Outfit',sans-serif;
+  font-size:22px; font-weight:800; color:var(--gold);
+}
+
+/* ── GOOGLE SECTION ───────────────────────────────────── */
+.google-accounts { display:flex; flex-direction:column; gap:14px; }
+.google-account-card {
+  background:var(--navy-card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+}
+.gac-header {
+  padding:14px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:10px;
+}
+.gac-name {
+  font-weight:700; font-size:15px; color:var(--white); flex:1;
+}
+.gac-id { font-size:11px; color:var(--text-muted); }
+.gac-body {
+  padding:16px 20px;
+  display:grid; grid-template-columns: repeat(5,1fr);
+  gap:12px;
+}
+.gac-metric { }
+.gac-metric-label {
+  font-size:9px; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--text-muted); margin-bottom:4px;
+}
+.gac-metric-value {
+  font-family:'Outfit',sans-serif;
+  font-size:18px; font-weight:700; color:var(--white);
+}
+.gac-metric-value.gold { color:var(--gold); }
+.gac-metric-value.green { color:#34d399; }
+.gac-campaigns {
+  padding:0 20px 16px;
+  font-size:12px; color:var(--text-muted);
+}
+.gac-camp-row {
+  display:flex; align-items:center; gap:8px;
+  padding:6px 0; border-top:1px solid var(--border);
+  font-size:12px;
+}
+.gac-camp-name { color:var(--text-dim); flex:1; }
+.gac-camp-type {
+  font-size:9px; font-weight:600; letter-spacing:1px;
+  padding:2px 7px; border-radius:8px;
+  background:rgba(255,255,255,.06); color:var(--text-muted);
+}
+.gac-camp-stat { font-family:'Outfit',sans-serif; font-weight:700; font-size:13px; color:var(--white); }
+.gac-camp-stat.gold { color:var(--gold); }
+.status-limited {
+  font-size:9px; font-weight:700; letter-spacing:.5px;
+  color:#f87171; background:rgba(248,113,113,.1);
+  border:1px solid rgba(248,113,113,.25);
+  padding:2px 6px; border-radius:6px;
+}
+.status-ok {
+  font-size:9px; font-weight:700;
+  color:#34d399; background:rgba(52,211,153,.1);
+  border:1px solid rgba(52,211,153,.25);
+  padding:2px 6px; border-radius:6px;
+}
+.status-paused {
+  font-size:9px; font-weight:700;
+  color:var(--text-muted); background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  padding:2px 6px; border-radius:6px;
+}
+
+@media print {
+  body { background:#fff; }
+  .wrap { max-width:100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="brand-name">Gráfica Fábrica de Ideias</div>
+      <div class="report-title">Relatório de<br><span>Performance</span></div>
+    </div>
+    <div class="report-meta">
+      <div class="period-badge">8 — 24 de Abril, 2026</div>
+      <div class="platform-tag">
+        <span class="platform-dot dot-meta"></span>Meta Ads &nbsp;·&nbsp;
+        <span class="platform-dot dot-google"></span>Google Ads
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ═══════════════════════════════════════════════════
+       VISÃO GERAL
+  ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Visão Geral do Período</div>
+    <div class="kpi-grid">
+      <div class="kpi-card gold-border">
+        <div class="kpi-icon">💰</div>
+        <div class="kpi-label">Total Investido (Meta)</div>
+        <div class="kpi-value gold">R$339</div>
+        <div class="kpi-sub">8 a 24 de abril · 17 dias</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">👁️</div>
+        <div class="kpi-label">Impressões Totais</div>
+        <div class="kpi-value">21.679</div>
+        <div class="kpi-sub">Frequência média: 1,62×</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">💬</div>
+        <div class="kpi-label">Mensagens Iniciadas</div>
+        <div class="kpi-value">189</div>
+        <div class="kpi-sub">R$1,53 por mensagem</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">📋</div>
+        <div class="kpi-label">Leads Gerados</div>
+        <div class="kpi-value">8</div>
+        <div class="kpi-sub">R$5,11 por lead</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       META ADS
+  ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Meta Ads (Instagram & Facebook)</div>
+
+    <div class="platform-header">
+      <div class="platform-logo meta">📘</div>
+      <div>
+        <div class="platform-title">Meta Ads</div>
+        <div class="platform-period">Conta: CA - Fábrica de Ideias [NOVA]</div>
+      </div>
+      <div class="platform-total">
+        <div class="platform-total-label">Investimento Total</div>
+        <div class="platform-total-value">R$339,43</div>
+      </div>
+    </div>
+
+    <div class="camp-grid">
+
+      <!-- CAMPANHA MENSAGEM -->
+      <div class="camp-card">
+        <div class="camp-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <span class="camp-type-badge badge-mensagem">💬 Mensagem</span>
+              <span class="camp-status">● Ativa</span>
+            </div>
+            <div class="camp-name">[MENSAGEM] [WHATSAPP]</div>
+          </div>
+        </div>
+        <div class="camp-body">
+          <div class="camp-spend">R$288,63</div>
+          <div class="camp-spend-label">investimento no período</div>
+
+          <div class="metrics-row">
+            <div class="metric-item">
+              <div class="metric-label">Impressões</div>
+              <div class="metric-value">18.946</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">Alcance</div>
+              <div class="metric-value">10.780</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">Frequência</div>
+              <div class="metric-value">1,76×</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">Cliques</div>
+              <div class="metric-value">607</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">CTR</div>
+              <div class="metric-value accent">3,20%</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">CPC</div>
+              <div class="metric-value green">R$0,48</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-icon">💬</div>
+            <div>
+              <div class="highlight-label">Mensagens Iniciadas</div>
+              <div class="highlight-value">189</div>
+              <div class="highlight-sub">Custo por mensagem: <strong style="color:var(--gold)">R$1,53</strong> &nbsp;·&nbsp; Conversas ativas (7d): 164</div>
+            </div>
+          </div>
+
+          <div style="margin-top:10px; font-size:11px; color:var(--text-muted); line-height:1.6;">
+            <strong style="color:var(--text-dim)">Primeiras respostas:</strong> 151 &nbsp;·&nbsp;
+            <strong style="color:var(--text-dim)">Custo/conversa:</strong> R$1,76 &nbsp;·&nbsp;
+            <strong style="color:var(--text-dim)">Engajamentos:</strong> 5.346
+          </div>
+        </div>
+      </div>
+
+      <!-- CAMPANHA FORMULÁRIO -->
+      <div class="camp-card">
+        <div class="camp-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <span class="camp-type-badge badge-leads">📋 Formulário</span>
+              <span class="camp-status">● Ativa</span>
+            </div>
+            <div class="camp-name">[FORMULÁRIO] [EMPRESAS]</div>
+          </div>
+        </div>
+        <div class="camp-body">
+          <div class="camp-spend">R$40,85</div>
+          <div class="camp-spend-label">investimento no período</div>
+
+          <div class="metrics-row">
+            <div class="metric-item">
+              <div class="metric-label">Impressões</div>
+              <div class="metric-value">1.473</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">Alcance</div>
+              <div class="metric-value">1.150</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">Frequência</div>
+              <div class="metric-value">1,28×</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">Cliques</div>
+              <div class="metric-value">43</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">CTR</div>
+              <div class="metric-value accent">2,92%</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-label">CPC</div>
+              <div class="metric-value">R$0,95</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-icon">🎯</div>
+            <div>
+              <div class="highlight-label">Leads Gerados</div>
+              <div class="highlight-value">8 leads</div>
+              <div class="highlight-sub">CPL: <strong style="color:var(--gold)">R$5,11</strong> &nbsp;·&nbsp; Conv. clique→lead: <strong style="color:var(--gold)">18,6%</strong></div>
+            </div>
+          </div>
+
+          <div style="margin-top:10px; font-size:11px; color:var(--text-muted); line-height:1.6;">
+            Campanha recente de formulário nativo Meta, focada em<br>
+            <strong style="color:var(--text-dim)">captação de empresas (PJ)</strong>. Excelente taxa de conversão.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TOP CRIATIVOS
+  ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Melhores Criativos</div>
+
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">
+      Ranking por resultado principal de cada campanha (mensagens / leads gerados)
+    </div>
+
+    <div style="margin-bottom:8px; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted);">
+      💬 Campanha Mensagem WhatsApp
+    </div>
+    <div class="creative-list" style="margin-bottom:24px;">
+
+      <div class="creative-item top">
+        <div class="creative-rank gold-text">🥇</div>
+        <div class="creative-info">
+          <div class="creative-name">Cartão Personalizado
+            <span class="creative-badge badge-best-cost">+ resultados</span>
+          </div>
+          <div class="creative-camp">Campanha Mensagem &nbsp;·&nbsp; Maior volume de conexões</div>
+        </div>
+        <div class="creative-stats">
+          <div class="cstat">
+            <div class="cstat-label">Mensagens</div>
+            <div class="cstat-value gold">86</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Custo/msg</div>
+            <div class="cstat-value">R$1,48</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">CTR</div>
+            <div class="cstat-value">3,04%</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Gasto</div>
+            <div class="cstat-value">R$126,90</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="creative-item top">
+        <div class="creative-rank silver">🥈</div>
+        <div class="creative-info">
+          <div class="creative-name">WindBanner
+            <span class="creative-badge badge-best-cost">🏆 menor custo/msg</span>
+          </div>
+          <div class="creative-camp">Campanha Mensagem &nbsp;·&nbsp; Melhor custo por conexão</div>
+        </div>
+        <div class="creative-stats">
+          <div class="cstat">
+            <div class="cstat-label">Mensagens</div>
+            <div class="cstat-value gold">33</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Custo/msg</div>
+            <div class="cstat-value green">R$1,00</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">CTR</div>
+            <div class="cstat-value">3,57%</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Gasto</div>
+            <div class="cstat-value">R$33,12</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="creative-item top">
+        <div class="creative-rank bronze">🥉</div>
+        <div class="creative-info">
+          <div class="creative-name">Quadros Aberto
+            <span class="creative-badge" style="background:rgba(156,163,175,.1);color:#9ca3af;border:1px solid rgba(156,163,175,.2);">novo</span>
+          </div>
+          <div class="creative-camp">Campanha Mensagem &nbsp;·&nbsp; Bom custo e CTR acima da média</div>
+        </div>
+        <div class="creative-stats">
+          <div class="cstat">
+            <div class="cstat-label">Mensagens</div>
+            <div class="cstat-value gold">26</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Custo/msg</div>
+            <div class="cstat-value">R$1,39</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">CTR</div>
+            <div class="cstat-value">3,44%</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Gasto</div>
+            <div class="cstat-value">R$36,22</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="creative-item">
+        <div class="creative-rank" style="color:#6b7280;">4</div>
+        <div class="creative-info">
+          <div class="creative-name">Quadros Direcionado
+            <span class="creative-badge badge-best-ctr">🏆 maior CTR</span>
+          </div>
+          <div class="creative-camp">Campanha Mensagem &nbsp;·&nbsp; CTR: 3,86% — melhor clicabilidade</div>
+        </div>
+        <div class="creative-stats">
+          <div class="cstat">
+            <div class="cstat-label">Mensagens</div>
+            <div class="cstat-value">14</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Custo/msg</div>
+            <div class="cstat-value">R$1,97</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">CTR</div>
+            <div class="cstat-value gold">3,86%</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Gasto</div>
+            <div class="cstat-value">R$27,55</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="creative-item">
+        <div class="creative-rank" style="color:#6b7280;">5</div>
+        <div class="creative-info">
+          <div class="creative-name">Cardápio NOVO</div>
+          <div class="creative-camp">Campanha Mensagem &nbsp;·&nbsp; Performance abaixo dos demais</div>
+        </div>
+        <div class="creative-stats">
+          <div class="cstat">
+            <div class="cstat-label">Mensagens</div>
+            <div class="cstat-value">12</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Custo/msg</div>
+            <div class="cstat-value" style="color:#f87171;">R$2,43</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">CTR</div>
+            <div class="cstat-value">2,83%</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Gasto</div>
+            <div class="cstat-value">R$29,19</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-bottom:8px; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted);">
+      📋 Campanha Formulário Empresas
+    </div>
+    <div class="creative-list">
+
+      <div class="creative-item top">
+        <div class="creative-rank gold-text">🥇</div>
+        <div class="creative-info">
+          <div class="creative-name">WindBanner
+            <span class="creative-badge badge-all-leads">100% dos leads</span>
+          </div>
+          <div class="creative-camp">Campanha Formulário &nbsp;·&nbsp; Único criativo que gerou conversões</div>
+        </div>
+        <div class="creative-stats">
+          <div class="cstat">
+            <div class="cstat-label">Leads</div>
+            <div class="cstat-value gold">8</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">CPL</div>
+            <div class="cstat-value green">R$3,65</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">CTR</div>
+            <div class="cstat-value">3,52%</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-label">Gasto</div>
+            <div class="cstat-value">R$29,23</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       GOOGLE ADS
+  ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Google Ads — Fábrica de Ideias</div>
+
+    <div class="platform-header">
+      <div class="platform-logo google">📊</div>
+      <div>
+        <div class="platform-title">Google Ads</div>
+        <div class="platform-period">Conta 796-085-3128 · 8 a 24 de Abril, 2026</div>
+      </div>
+      <div class="platform-total">
+        <div class="platform-total-label">Investimento Total</div>
+        <div class="platform-total-value">R$622,01</div>
+      </div>
+    </div>
+
+    <!-- KPIs Google -->
+    <div class="kpi-grid" style="margin-bottom:18px;">
+      <div class="kpi-card">
+        <div class="kpi-icon">👁️</div>
+        <div class="kpi-label">Impressões</div>
+        <div class="kpi-value">2.557</div>
+        <div class="kpi-sub">Pesquisa Google</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">🖱️</div>
+        <div class="kpi-label">Cliques</div>
+        <div class="kpi-value">387</div>
+        <div class="kpi-sub">CTR médio: 15,1%</div>
+      </div>
+      <div class="kpi-card gold-border">
+        <div class="kpi-icon">🎯</div>
+        <div class="kpi-label">Conversões</div>
+        <div class="kpi-value gold">81</div>
+        <div class="kpi-sub">Taxa de conv.: 20,9%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">💰</div>
+        <div class="kpi-label">CPC Médio</div>
+        <div class="kpi-value">R$1,61</div>
+        <div class="kpi-sub">Custo/conv: R$7,68</div>
+      </div>
+    </div>
+
+    <div class="google-accounts">
+
+      <!-- REDE DE PESQUISA -->
+      <div class="google-account-card">
+        <div class="gac-header">
+          <div class="gac-name">Rede de Pesquisa — Novas configurações</div>
+          <span class="status-limited">Limitada pelo orçamento</span>
+        </div>
+        <div class="gac-body">
+          <div class="gac-metric">
+            <div class="gac-metric-label">Impressões</div>
+            <div class="gac-metric-value">2.361</div>
+          </div>
+          <div class="gac-metric">
+            <div class="gac-metric-label">Cliques</div>
+            <div class="gac-metric-value">379</div>
+          </div>
+          <div class="gac-metric">
+            <div class="gac-metric-label">CTR</div>
+            <div class="gac-metric-value green">16,05%</div>
+          </div>
+          <div class="gac-metric">
+            <div class="gac-metric-label">CPC Médio</div>
+            <div class="gac-metric-value">R$1,61</div>
+          </div>
+          <div class="gac-metric">
+            <div class="gac-metric-label">Custo</div>
+            <div class="gac-metric-value gold">R$611</div>
+          </div>
+        </div>
+        <div class="gac-campaigns">
+          <div class="gac-camp-row">
+            <span style="font-size:12px;color:var(--text-dim);">Conversões:</span>
+            <span class="gac-camp-stat gold">78 conv</span>
+            <span style="font-size:11px;color:var(--text-muted);">&nbsp;·&nbsp; Taxa: 20,58% &nbsp;·&nbsp; R$7,84/conv</span>
+            <span style="margin-left:auto;" class="gac-camp-type">Pesquisa · Maximizar conversões</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RE9 PERFORMANCE MAX (PAUSADA) -->
+      <div class="google-account-card" style="opacity:.7;">
+        <div class="gac-header">
+          <div class="gac-name">RE9 | P. Max | Site | FOR</div>
+          <span class="status-paused">Pausada</span>
+        </div>
+        <div class="gac-body">
+          <div class="gac-metric">
+            <div class="gac-metric-label">Impressões</div>
+            <div class="gac-metric-value">171</div>
+          </div>
+          <div class="gac-metric">
+            <div class="gac-metric-label">Cliques</div>
+            <div class="gac-metric-value">8</div>
+          </div>
+          <div class="gac-metric">
+            <div class="gac-metric-label">CTR</div>
+            <div class="gac-metric-value">4,68%</div>
+          </div>
+          <div class="gac-metric">
+            <div class="gac-metric-label">CPC Médio</div>
+            <div class="gac-metric-value">R$1,24</div>
+          </div>
+          <div class="gac-metric">
+            <div class="gac-metric-label">Custo</div>
+            <div class="gac-metric-value">R$9,91</div>
+          </div>
+        </div>
+        <div class="gac-campaigns">
+          <div class="gac-camp-row">
+            <span style="font-size:12px;color:var(--text-dim);">Conversões:</span>
+            <span class="gac-camp-stat">3 conv</span>
+            <span style="font-size:11px;color:var(--text-muted);">&nbsp;·&nbsp; Taxa: 37,50% &nbsp;·&nbsp; R$3,30/conv</span>
+            <span style="margin-left:auto;" class="gac-camp-type">Perf. Max · CPA desejado</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Alerta de saldo -->
+    <div style="margin-top:16px; background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.3); border-left:3px solid #f87171; border-radius:12px; padding:16px 20px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:22px;">⚠️</div>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#f87171;margin-bottom:6px;">Alerta: Saldo pré-pago chegando ao fim</div>
+          <div style="font-size:13px;color:var(--text-dim);line-height:1.6;">
+            A campanha está gastando aproximadamente <strong style="color:var(--white);">R$36/dia</strong>. Com o saldo restante, o Google projeta menos de 3 dias de veiculação e começa a <em>throttle</em> (frear progressivamente) a entrega — não espera zerar para agir.<br><br>
+            <strong style="color:var(--white);">Ontem (23/04):</strong> 124 impressões, 16 cliques, R$10,52.<br>
+            <strong style="color:var(--white);">Hoje (24/04):</strong> 30 impressões, 1 clique, R$0,03 — entrega freada.<br><br>
+            <strong style="color:#f87171;">Ação necessária: recarregar o saldo pré-pago. Com o crédito restaurado, a campanha volta ao ritmo normal no mesmo dia.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       ANÁLISE: QUEDA DE CLIQUES
+  ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Análise — Queda de Cliques</div>
+
+    <div class="analysis-card">
+      <div class="analysis-question">
+        <div class="analysis-q-icon">🤔</div>
+        <div>
+          <div class="analysis-q-text">Por que o valor do clique caiu e a quantidade de cliques também?</div>
+          <div class="analysis-q-sub">Pergunta do cliente sobre a variação observada no dia 23/04</div>
+        </div>
+      </div>
+
+      <!-- Comparativo hoje vs ontem -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+        <div style="background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:14px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#f87171;margin-bottom:8px;">⚠️ Hoje — 24/04/2026</div>
+          <div style="display:flex;gap:20px;">
+            <div><div style="font-size:9px;color:var(--text-muted);margin-bottom:2px;">IMPRESSÕES</div><div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:#f87171;">30</div></div>
+            <div><div style="font-size:9px;color:var(--text-muted);margin-bottom:2px;">CLIQUES</div><div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:#f87171;">1</div></div>
+            <div><div style="font-size:9px;color:var(--text-muted);margin-bottom:2px;">CUSTO</div><div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:#f87171;">R$0,03</div></div>
+          </div>
+        </div>
+        <div style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:14px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#34d399;margin-bottom:8px;">✅ Ontem — 23/04/2026</div>
+          <div style="display:flex;gap:20px;">
+            <div><div style="font-size:9px;color:var(--text-muted);margin-bottom:2px;">IMPRESSÕES</div><div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:#34d399;">124</div></div>
+            <div><div style="font-size:9px;color:var(--text-muted);margin-bottom:2px;">CLIQUES</div><div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:#34d399;">16</div></div>
+            <div><div style="font-size:9px;color:var(--text-muted);margin-bottom:2px;">CUSTO</div><div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:#34d399;">R$10,52</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reasons-grid">
+        <div class="reason-item" style="border:1px solid rgba(248,113,113,.3);background:rgba(248,113,113,.06);">
+          <div class="reason-icon">🔴</div>
+          <div>
+            <div class="reason-title" style="color:#f87171;">Causa Principal — Saldo Pré-Pago Próximo do Fim</div>
+            <div class="reason-text">O Google Ads freou a entrega progressivamente ao detectar que o saldo (~R$90 restantes) cobre menos de 3 dias ao ritmo atual de ~R$36/dia. Esse comportamento é intencional: o Google prefere desacelerar a parar do nada no meio do dia.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-icon">📉</div>
+          <div>
+            <div class="reason-title">Queda Gradual, Não Abrupta</div>
+            <div class="reason-text">A redução não foi de uma vez — foi progressiva nos últimos dias à medida que o saldo diminuía. Isso é típico do throttle do Google: vai reduzindo a frequência de leilões disputados até o saldo ser recarregado.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-icon">📈</div>
+          <div>
+            <div class="reason-title">A Campanha Está Ótima</div>
+            <div class="reason-text">CTR de 16,05% e taxa de conversão de 20,58% estão muito acima da média de mercado. Não é problema de campanha, de criativo, de público ou de concorrência — é só uma questão de combustível.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-icon">⚡</div>
+          <div>
+            <div class="reason-title">Solução Imediata</div>
+            <div class="reason-text">Recarregar o saldo pré-pago na conta Google Ads. Diferente de campanhas pós-pagas, a conta pré-paga exige recargas manuais periódicas. Com o crédito restaurado, a campanha volta ao ritmo normal no mesmo dia.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="analysis-conclusion">
+        <strong>Conclusão direta:</strong> Os cliques caíram porque o <strong>saldo pré-pago está acabando</strong> — não por problema de campanha, de criativo ou de concorrência. Com CTR de 16% e conversão de 20%, a campanha está performando muito bem. A solução é simples: recarregar o crédito na conta Google Ads e a performance volta no mesmo dia.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       RECOMENDAÇÕES
+  ════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">Recomendações</div>
+
+    <div class="recs-list">
+
+      <div class="rec-item">
+        <div class="rec-icon">🚀</div>
+        <div style="flex:1;">
+          <div class="rec-title">Escalar WindBanner — Menor custo por resultado nas duas campanhas</div>
+          <div class="rec-text">O criativo WindBanner tem o menor custo por mensagem (R$1,00) na campanha de engajamento E o menor CPL (R$3,65) na campanha de formulário. Aumentar o orçamento direcionado a esse criativo tende a gerar mais resultados com o mesmo investimento.</div>
+        </div>
+        <div class="rec-priority priority-high">Prioridade Alta</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-icon">📈</div>
+        <div style="flex:1;">
+          <div class="rec-title">Ampliar Campanha de Formulário — CPL de R$5,11 é muito competitivo para B2B</div>
+          <div class="rec-text">8 leads B2B a R$5,11/lead é uma taxa excelente. A campanha ainda tem frequência baixa (1,28×) e alcance limitado a 1.150 pessoas — há muito espaço para escalar sem saturar a audiência.</div>
+        </div>
+        <div class="rec-priority priority-high">Prioridade Alta</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-icon">🔴</div>
+        <div style="flex:1;">
+          <div class="rec-title">Recarregar saldo pré-pago Google Ads — campanha freando por fundo baixo</div>
+          <div class="rec-text">Com ~R$90 restantes e ritmo de ~R$36/dia, o Google já está fazendo throttle da entrega. Hoje: apenas 1 clique (R$0,03). Recarregar o crédito faz a campanha voltar ao ritmo normal no mesmo dia — sem precisar mexer em configuração nenhuma.</div>
+        </div>
+        <div class="rec-priority priority-high">Urgente</div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-icon">🔄</div>
+        <div style="flex:1;">
+          <div class="rec-title">Pausar Cardápio NOVO — Performance abaixo da média</div>
+          <div class="rec-text">Com custo por mensagem de R$2,43 (vs. R$1,00 do WindBanner), o Cardápio NOVO está consumindo R$29 por mês com eficiência 2,4× menor que o melhor criativo. Redistribuir esse orçamento para WindBanner ou Quadros Aberto.</div>
+        </div>
+        <div class="rec-priority priority-med">Prioridade Média</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>
+      <div class="footer-brand">Fábrica de Ideias</div>
+      <div class="footer-note">Dados: Meta Ads API · Google Ads Dashboard</div>
+    </div>
+    <div class="footer-note" style="text-align:center;">
+      Relatório gerado para uso interno<br>Dados confidenciais
+    </div>
+    <div class="footer-date">
+      Período: 8 – 24 de Abril, 2026<br>
+      Gerado em: 24/04/2026
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+</body>
+</html>
